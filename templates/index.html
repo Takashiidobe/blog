@@ -22,10 +22,14 @@
       src="https://plausible.takashiidobe.com/js/plausible.js"
     ></script>
     <style>
+      :root {
+        --background-color-light: #fdfdfd;
+        --background-color-text-light: #111;
+        --background-color-text-dark: #eee;
+        --background-color-dark: #010101;
+      }
       body {
         font: 400 1em/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #111;
-        background-color: #fdfdfd;
         -webkit-text-size-adjust: 100%;
         -webkit-font-feature-settings: "kern" 1;
         -moz-font-feature-settings: "kern" 1;
@@ -39,6 +43,18 @@
       @media only screen and (max-width: 600px) {
         body {
           padding: 5px;
+        }
+      }
+      @media only screen and (prefers-color-scheme: dark) {
+        body {
+          background-color: var(--background-color-dark);
+          color: var(--background-color-text-dark);
+        }
+      }
+      @media only screen and (prefers-color-scheme: light) {
+        body {
+          background-color: var(--background-color-light);
+          color: var(--background-color-text-light);
         }
       }
       hr {
@@ -72,7 +88,16 @@
       h1,
       h2 {
         border-bottom: 1px solid #eaecef;
-        color: #111;
+      }
+      @media only screen and (prefers-color-scheme: dark) {
+        h1, h2 {
+          color: var(--background-color-text-dark);
+        }
+      }
+      @media only screen and (prefers-color-scheme: light) {
+        h1, h2 {
+          color: var(--background-color-text-light);
+        }
       }
     </style>
   </head>

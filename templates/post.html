@@ -31,10 +31,21 @@
 
     <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
     <style>
+      :root {
+        --background-color: #fdfdfd;
+        --color: #111;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background-color: #010101;
+          --color: #eee;
+          --code-color: #555;
+        }
+      }
       body {
         font: 400 1em/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
-        color: #111;
-        background-color: #fdfdfd;
+        background-color: var(--background-color);
+        color: var(--color);
         -webkit-text-size-adjust: 100%;
         -webkit-font-feature-settings: "kern" 1;
         -moz-font-feature-settings: "kern" 1;
@@ -74,6 +85,7 @@
         padding: 16px;
       }
       code {
+        color: var(--code-color);
         background-color: rgba(27, 31, 35, 0.05);
         border-radius: 3px;
         font-size: 85%;
@@ -113,6 +125,7 @@
         color: #6a737d !important;
       }
       table {
+        color: var(--code-color);
         border-spacing: 2px;
         display: block;
         font-size: 14px;
@@ -145,13 +158,11 @@
         line-height: 24px;
         font-weight: 400;
         font-size: 16px;
-        color: #24292e;
       }
       ul {
         margin-top: 0;
       }
       li {
-        color: #24292e;
         font-size: 16px;
         font-weight: 400;
         line-height: 1.5;
@@ -175,7 +186,7 @@
       h1,
       h2 {
         border-bottom: 1px solid #eaecef;
-        color: #111;
+        color: var(--color);
       }
     </style>
     $if(highlighting-css)$

@@ -4,3 +4,4 @@
 - Cross compilation for Rust with libraries
 - Using Dart for Cross Compilation
 - Working Offline
+- Connecting calcurse to work offline
