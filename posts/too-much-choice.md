@@ -1,0 +1,27 @@
+---
+title: "Too Much Choice"
+date: 2020-11-20T20:11:36-05:00
+draft: true
+---
+
+Do you remember the wonder that filled your heart the first time you went to the store? How there were just shelves stocked with stuff. Food as far as the eye can see, toys, gadgets, electronics. And you can window shop -- you just look at this stuff in awe cause as long as you don't have this green paper called money, you can only look at it.
+
+What happens if we take away the requirement of needing to exchange the money for goods, and the goods don't disappear off the shelves? Sounds utopian, doesn't it? That's how I would explain the internet to people. As long as someone else pays the rent to keep a website up, you can peruse the contents for free -- in other words, you get utility while someone else fronts the rent bill. Of course the renters have ways to make the consumers pay for their rent + more (ads), but as long as you're willing to put up with that, no consumer will say no to this deal. The internet is useful at providing a common good that involves communication -- as long as you can write it or speak it, you can put a copy of it on the internet. It's amazing. But it comes at a cost.
+
+I'm not going to go deeper into how increased internet usage has negative outcomes; people who are more qualified than I have discussed that many times. I also don't believe the internet itself is to blame, rather, it's both the website creators and the user's fault -- users dont want to pay to use a service, so renters have to provide ads to get their rent; users don't pay a monetary tax, but they pay a mental tax -- they trade their mental fortitude for rentier money. If users were willing to pay money, then this would not be a problem, but it's not a tradeoff many are willing to make.
+
+I started off this piece by saying that stores are stocked with goods as plentiful as the eye can see (for a toddler, at least), but I should've prefaced that by saying "if you live in the rich capitalist world", and "are of a certain age" because if you grew up in a communist republic, you probably didn't have the same experience -- food and goods were pretty scarce, because of economic controls instated by the government. Communism as an economic default leads to generating enough goods for its population as required; nothing more, nothing less -- grocery stores are a good example of this, as there would very rarely be food stocked, since most everybody is on food stamps, so what would be left on the shelves would be exchanged for food stamps. Communism is biased towards the economics of scarcity.
+
+Capitalism is the exact opposite -- the government wants to increase the production and consumption of goods -- if you go to the grocery store, you want to buy as much as you can, and you certainly can -- there is no control on that. Likewise, on the supply side, this led to massive multi-national corporations that became extremely efficient at producing more goods to support the ravenous hunger of the production side. Capitalism is biased towards the economics of surplus -- you want to create so many goods that your people cannot consume them, and sell them to other countries in exchange for currency that you can use to consume and produce more.
+
+Because of lax control on the internet, of the top 5 most valuable American companies by market cap, three (Google, Amazon, Facebook) are websites. Two of those (Facebook and Google) receive over 90% of their revenue from ads. Rentiers are making money like never before, and that's all thanks to the internet. I'm sure some of you agree that having a surplus of the internet is better than having a dearth of it, and I would agree -- mostly.
+
+But just as there are side-effects to running a bare-bones efficient economy, there are side-effects to running an economy on surplus mode. The United States, which did just that to usher in an unprecedented era of economic growth in the 20th century also emitted a _majority_ of greenhouse gasses in the 20th century. Less than 5% of the world population was responsible for over 50% of climate change the past hundred years.
+
+I firmly believe that the internet will be the same way -- a great tool for humanity, but with unprecedented effects on our mental health. America has become more polarized over the past 30 years, and prone to violence. It seems insane to think about the fact that a school shooting twenty years ago that killed a handful of kids dominated the news cycle for years, when a school shooting happens almost monthly in America now. Misinformation through the internet has given a platform for conspiracy theorists and those who don't believe in science.
+
+Surplus always has a cost. The internet is good to a certain extent, but you must both limit your consumption and production, before your consumption starts harming you. Thus, I've decided to try an experiment -- no internet weekends.
+
+I've written a little shell script that changes my DNS server between 0.0.0.0 and a valid DNS server in the command line, and downloaded a DNS server application to my android that does the same.
+
+I'm going to spend my weekdays finding nice resources I'd like to read/study, finding a way to get a copy of them, and then on the weekends living like an ascetic, trying to find my own headspace to learn. I'll report back at the end of the year with a blog post about how this worked out.

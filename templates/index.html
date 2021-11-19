@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  lang="$lang$"
+  xml:lang="$lang$"
+  $if(dir)$
+  dir="$dir$"
+  $endif$
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <title>Takashi's Blog</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <script
+      async
+      defer
+      data-domain="takashiidobe.com"
+      src="https://plausible.takashiidobe.com/js/plausible.js"
+    ></script>
+    <style>
+      body {
+        font: 400 1em/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+        color: #111;
+        background-color: #fdfdfd;
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-feature-settings: "kern" 1;
+        -moz-font-feature-settings: "kern" 1;
+        -o-font-feature-settings: "kern" 1;
+        font-feature-settings: "kern" 1;
+        font-kerning: normal;
+        padding: 15px;
+        margin: 0 auto;
+        max-width: 775px;
+      }
+      @media only screen and (max-width: 600px) {
+        body {
+          padding: 5px;
+        }
+      }
+      hr {
+        color: #bbb;
+        background-color: #bbb;
+        height: 1px;
+        flex: 0 1 auto;
+        margin: 1em 0;
+        padding: 0;
+        border: none;
+      }
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      a:visited {
+        color: #0366d6;
+      }
+      h1 {
+        font-size: 1.25em;
+        margin: 0.67em 0;
+      }
+      h2 {
+        font-size: 1.125em;
+      }
+      h3 {
+        font-size: 1em;
+      }
+      h1,
+      h2 {
+        border-bottom: 1px solid #eaecef;
+        color: #111;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Takashi's Blog</h1>
+    </header>
+
+    <h2><a href="https://resume.takashiidobe.com/">Resume</a></h2>
+
+    <h2>Welcome 👋</h2>
+    <p>
+      I am a Software Engineer at
+      <a href="https://www.zendesk.com/">Zendesk</a>, working on the Ticket
+      Platform team, specifically on archival of tickets.
+    </p>
+    <p>
+      Prior to working at Zendesk, I was a software engineer at
+      <a href="https://www.amazon.com">Amazon</a>, working on visualization and
+      ingestion of sales data in order to reduce toil on our sales pipelines.
+    </p>
+    <p>
+      Prior to working at Amazon, I worked at
+      <a href="https://www.cardflight.com/">CardFlight</a>, a startup based out
+      of New York City that is building payments software for small businesses.
+      I mostly worked on the backend where I got to implement the specifications
+      of payment processors into our gateway, and sometimes contribute to our
+      mobile SDKs.
+    </p>
+    <p>
+      Before I became a software developer, I worked at a variety of positions
+      including a startup called
+      <a href="http://www.frasen.io/">Frasen</a> where I worked with the
+      executive team to raise capital, as a chef at
+      <a href="https://hachibei.com/">Yakitori Hachibei</a>, and taught English
+      at <a href="https://gengoworld.com/">GengoWorld</a>.
+    </p>
+    <h2>Interests</h2>
+    <p>
+      I’m a web developer at heart, but like learning about computer science. In
+      particular, I enjoy learning about Operating Systems, Functional
+      Programming, and Distributed Systems.
+    </p>
+
+    <p><a href="feed.json">JSON Feed</a> <a href="rss.xml">RSS Feed</a></p>
+    <hr />
+    $if(toc)$
+    <nav id="$idprefix$TOC" role="doc-toc">$table-of-contents$</nav>
+    $endif$ $body$ $for(include-after)$ $include-after$ $endfor$
+  </body>
+</html>
