@@ -6,22 +6,18 @@ OUT=$(patsubst posts/%.md, site/gen/%.html, $(POSTS))
 all: mkdirs $(OUT) site/index.html
 
 deploy:
-	make clean && make && make numberlines && make rss && ntl deploy --prod
+	make clean && make && make rss && ntl deploy --prod
 
-site/gen/%.html: posts/%.md 
-	pandoc -f markdown+fenced_divs -s $< -o $@ --template templates/post.html
+site/gen/%.html: posts/%.md templates/post.html
+	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --template templates/post.html
 
-site/index.html: $(OUT) make_index.py
+site/index.html: $(OUT) make_index.py templates/index.html
 	python3 make_index.py
 	pandoc -s index.md -o site/index.html --template templates/index.html --metadata title="Takashi's Blog"
 	rm index.md
 
-.PHONY: numberlines
-numberlines:
-	./bin/add_numberlines.sh
-
-.PHONY: mkdirs 
-mkdirs: 
+.PHONY: mkdirs
+mkdirs:
 	mkdir -p site/gen
 	cp -r assets site
 
@@ -40,7 +36,7 @@ install:
 	pip install -r requirements.txt
 
 define HELP_TEXT
-make                  generate site 
+make                  generate site
 make site/index.html  generate just index.html
 make clean            Delete all generated files
 make deploy           Deploys the site to production

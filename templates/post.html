@@ -30,7 +30,7 @@
     ></script>
 
     <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
-    <style>
+      <style>
       :root {
         --background-color: #fdfdfd;
         --color: #111;
@@ -43,7 +43,8 @@
         }
       }
       body {
-        font: 400 1em/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 400;
         background-color: var(--background-color);
         color: var(--color);
         -webkit-text-size-adjust: 100%;
@@ -52,14 +53,10 @@
         -o-font-feature-settings: "kern" 1;
         font-feature-settings: "kern" 1;
         font-kerning: normal;
-        padding: 15px;
         margin: 0 auto;
-        max-width: 775px;
-      }
-      @media only screen and (max-width: 600px) {
-        body {
-          padding: 5px;
-        }
+        max-width: 87.5%;
+        font-size: calc(12px + 1vw);
+        padding: calc(5px + 0.2vw);
       }
       hr {
         color: #bbb;
@@ -106,16 +103,19 @@
         word-wrap: normal;
         font-size: 100%;
       }
+      .sourceCode {
+        overflow: auto !important;
+      }
       blockquote {
-        margin-left: 30px;
-        margin-top: 0px;
-        margin-bottom: 16px;
+        margin-left: calc(1vw);
+        margin-top: calc(0vw);
+        margin-bottom: calc(1vw);
         border-left-width: 3px;
         padding: 0 1em;
         color: #828282;
         border-left: 4px solid #e8e8e8;
-        padding-left: 15px;
-        font-size: 18px;
+        padding-left: calc(1vw);
+        font-size: 110%;
         letter-spacing: -1px;
         font-style: italic;
       }
@@ -128,10 +128,10 @@
         color: var(--code-color);
         border-spacing: 2px;
         display: block;
-        font-size: 14px;
+        font-size: 85%;
         overflow: auto;
         width: 100%;
-        margin-bottom: 16px;
+        margin-bottom: calc(1vw);
         border-spacing: 0;
         border-collapse: collapse;
       }
@@ -155,16 +155,14 @@
         max-width: 100%;
       }
       p {
-        line-height: 24px;
-        font-weight: 400;
-        font-size: 16px;
+        line-height: 1.5;
+        font-size: 100%;
       }
       ul {
         margin-top: 0;
       }
       li {
-        font-size: 16px;
-        font-weight: 400;
+        font-size: 100%;
         line-height: 1.5;
       }
       li + li {
@@ -174,14 +172,14 @@
         color: #0366d6;
       }
       h1 {
-        font-size: 1.25em;
+        font-size: 125%;
         margin: 0.67em 0;
       }
       h2 {
-        font-size: 1.125em;
+        font-size: 112.5%;
       }
       h3 {
-        font-size: 1em;
+        font-size: 100%;
       }
       h1,
       h2 {
@@ -203,7 +201,6 @@
   </head>
   <body>
     $for(include-before)$ $include-before$ $endfor$
-    <a href="../index.html">&laquo; blog</a>
     $if(title)$
     <header id="title-block-header">
       <h1 class="title">$title$</h1>
@@ -216,9 +213,8 @@
       $endif$
     </header>
     $endif$ $if(toc)$
+    <h2>Table of Contents</h1>
     <nav id="$idprefix$TOC" role="doc-toc">$table-of-contents$</nav>
     $endif$ $body$ $for(include-after)$ $include-after$ $endfor$
-    <script src="https://utteranc.es/client.js" label="comment" repo="takashiidobe/blog"
-      issue-term="pathname" theme="preferred-color-scheme" crossorigin="anonymous" async></script>
   </body>
 </html>
