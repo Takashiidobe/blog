@@ -1,14 +1,14 @@
 ---
 title: "Work Offline"
 date: 2021-10-07T20:43:45-05:00
-draft: false 
+draft: false
 ---
 
 In my last post, I discussed the tradeoffs of various languages with regards to software longevity -- I wanted to pick a language to use that would make long lasting software.
 
 In this post, I want to discuss working offline -- why that interleaves with the choice of language to use, and how to use tooling to make that accessible.
 
-Joe Nelson, of PostgREST fame, wrote a series of posts that resonated with me -- starting with ["Going 'Write Only'"](https://begriffs.com/posts/2015-04-20-going-write-only.html) where he starts off with quoting Joey Hess, a person who "Lives in a cabin and programs Haskell on a drastically under-powered netbook", where he harvests all of his electricity from the sun, and works using a distributed workflow, much like a git workflow. 
+Joe Nelson, of PostgREST fame, wrote a series of posts that resonated with me -- starting with ["Going 'Write Only'"](https://begriffs.com/posts/2015-04-20-going-write-only.html) where he starts off with quoting Joey Hess, a person who "Lives in a cabin and programs Haskell on a drastically under-powered netbook", where he harvests all of his electricity from the sun, and works using a distributed workflow, much like a git workflow.
 
 He then goes on to explain his motivation of going "write-only" thusly:
 
@@ -23,7 +23,7 @@ He then went on to publish more blog posts focused on creating software that las
 
 Which are all great reads, and inspired me to write this post about how I work offline, and what I use to make that happen.
 
-## Tools of the Trade 
+## Tools of the Trade
 
 ### [Git](https://git-scm.com/)
 
@@ -39,11 +39,11 @@ To pay it forward, I tend to bundle man pages with utilities that I make, like `
 
 Ever remember how to use `tar`? Me neither. Tldr is a man pages complement, offering examples for cli applications just by typing `tldr $keyword`. I personally really like it, because it's like having a concise stackoverflow at your fingertips.
 
-### [ZIM files](https://wiki.openzim.org/wiki/OpenZIM) 
+### [ZIM files](https://wiki.openzim.org/wiki/OpenZIM)
 
-When I tell people about working offline, they ask "but what about X website?". Well, if you want to look up a question on wikipedia or stackoverflow, you'd surely need online access, right? 
+When I tell people about working offline, they ask "but what about X website?". Well, if you want to look up a question on wikipedia or stackoverflow, you'd surely need online access, right?
 
-That's where ZIM files come in -- offline archives of whole websites. The kiwix project (sponsored by wikipedia) offers downloads and torrents for ZIM files for sites like wikipedia and stackoverflow, which you can wholesale download over an internet connection, and then search through to your hearts content. So if you ever forget how to reverse a linked list in your favorite language, you can search through stackoverflow to find out :P.
+That's where ZIM files come in -- offline archives of whole websites. The kiwix project (sponsored by wikipedia) offers downloads and torrents for ZIM files for sites like wikipedia and stackoverflow, which you can wholesale download over an internet connection, and then search through to your hearts content. So if you ever forget how to reverse a linked list in your favorite language, you can search through stackoverflow to find out.
 
 - <https://dumps.wikimedia.org/other/kiwix/zim/wikipedia/>
 - <https://ftp.fau.de/kiwix/zim/stack_exchange/>
@@ -54,7 +54,7 @@ You can also download wikipedia's own ZIM file archiver and archive other sites 
 
 Not all languages/projects have offline documentation, but most of them have documentation on the web. DevDocs is a project that allows you to download and search through that documentation in a convenient way offline. Every time you get back online, you can sync the documentation of the projects you like to follow. Nifty.
 
-### E-books 
+### E-books
 
 E-Books are really great too, in both PDF and epub format. You can keep a copy of them on your hard disk and search through them too without going to the internet.
 
@@ -64,7 +64,7 @@ E-Books are really great too, in both PDF and epub format. You can keep a copy o
 
 ### [Rustup + Cargo](https://www.rust-lang.org/learn)
 
-Rust has a strong focus on offline work -- cargo allows you to turn docstring comments into HTML documentation with search, and `rustup` comes with its own offline documentation, by virtue of `rustup docs`. 
+Rust has a strong focus on offline work -- cargo allows you to turn docstring comments into HTML documentation with search, and `rustup` comes with its own offline documentation, by virtue of `rustup docs`.
 
 Cargo also allows one to force offline mode by adding the `--offline` command line flag -- this forces cargo to use downloaded crates instead of going to `crates.io`.
 

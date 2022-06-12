@@ -11,6 +11,5 @@ for filename in os.listdir('./posts'):
         if 'draft' in metadata and metadata['draft'] == False:
             arr.append(os.path.join('posts', filename))
 
-
 for item in arr:
     print(item)
