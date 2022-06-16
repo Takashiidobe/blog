@@ -24,11 +24,9 @@ def getMetadata(static_post):
         # ISO 8601 dates are automatically datetimes.
         out['date'] = post.get('date')
     else:
-        print("[WARN] no date for post", static_post)
         out['date'] = datetime.now(tz=pytz.UTC)
     # If we don't have timezone info, we assume UTC.
     if isNaive(out['date']):
-        print("[WARN] No time zone for date; assuming UTC")
         out['date'] = out['date'].replace(tzinfo=pytz.UTC)
 
     out['abstract'] = post.get('abstract')
