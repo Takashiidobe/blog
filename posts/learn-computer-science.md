@@ -84,6 +84,10 @@ what agile development is all about?
 1. Computer Architecture, a Programmers Perspective
 2. Computer Architecture, Patterson and Hennessey
 
+### Resources
+
+1. Some Assembly Required
+
 ## Algorithms and Data Structures
 
 ### Textbooks
@@ -122,6 +126,10 @@ what agile development is all about?
 ### Textbooks
 
 1. Crafting Interpreters
+
+### Resources
+
+1. [Chibicc](https://github.com/rui314/chibicc)
 
 ## Distributed Systems
 
