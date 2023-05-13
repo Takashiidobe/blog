@@ -5,8 +5,8 @@ OUT=$(patsubst posts/%.md, site/gen/%.html, $(POSTS))
 
 all: mkdirs $(OUT) site/index.html
 
-deploy:
-	make clean && make && make rss && ntl deploy --prod
+deploy: all rss
+	ntl deploy --prod
 
 site/gen/%.html: posts/%.md templates/post.html
 	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --template templates/post.html
