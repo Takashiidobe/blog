@@ -77,3 +77,4 @@ Here's a list of resources I enjoyed, with a few comments.
 - [ripgrep](https://github.com/BurntSushi/ripgrep): Grep but faster
 - [scalene](https://github.com/plasma-umass/scalene): To diagnose python performance problems
 - [termux](https://termux.dev/en/): Run a unix terminal on your android phone
+- [panamax](https://github.com/panamax-rs/panamax): Mirror crates.io locally
