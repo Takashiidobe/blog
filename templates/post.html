@@ -32,7 +32,8 @@
     </style>
     $endif$ $for(css)$
     <link rel="stylesheet" href="$css$" />
-    $endfor$ $if(math)$ $math$ $endif$
+    $endfor$
+
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
     <![endif]-->
@@ -55,5 +56,24 @@
     <h2>Table of Contents</h1>
     <nav id="$idprefix$TOC" role="doc-toc">$table-of-contents$</nav>
     $endif$ $body$ $for(include-after)$ $include-after$ $endfor$
+    <script>
+      function appendJs(filepath, serverpath) {
+        var protocol = window.location.protocol;
+        var script = document.createElement("script");
+        if (protocol === 'file:') {
+          script.src = filepath;
+        } else {
+          script.src = serverpath;
+        }
+
+        script.type = "text/javascript";
+        document.body.appendChild(script);
+      }
+    </script>
+    $if(math)$
+    <script>
+      appendJs("/home/takashi/cdn/scripts/MathJax-3.2.2/es5/tex-chtml-full.js", "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml-full.js");
+    </script>
+    $endif$
   </body>
 </html>

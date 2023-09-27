@@ -9,7 +9,7 @@ deploy: all rss
 	ntl deploy --prod
 
 site/gen/%.html: posts/%.md templates/post.html
-	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --template templates/post.html
+	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --template templates/post.html --mathjax
 
 site/index.html: $(OUT) make_index.py templates/index.html
 	python3 make_index.py
@@ -20,6 +20,7 @@ site/index.html: $(OUT) make_index.py templates/index.html
 mkdirs:
 	mkdir -p site/gen
 	cp -r assets site
+	cp -r et-book site
 	cp templates/*.css site
 
 # Shortcuts
