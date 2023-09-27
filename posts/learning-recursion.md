@@ -1,10 +1,10 @@
 ---
 title: "Learning Recursion"
 date: 2021-06-03T11:30:55-04:00
-draft: false 
+draft: false
 ---
-It's been said that the only way to learn recursion is to learn recursion. So let's get started!
 
+It's been said that the only way to learn recursion is to learn recursion. So let's get started!
 
 Recursion is defined by the repeated application of a procedure. There are three distinct parts to creating a recursive function:
 
@@ -18,14 +18,14 @@ Let's look at all of them while applying them to a problem:
 
 ## A terminating base case
 
-We need a terminating base case, because otherwise a recursive function will continue forever. 
+We need a terminating base case, because otherwise a recursive function will continue forever.
 
-We'll start backwards (trying to find the case that terminates the algorithm) and work our way from there. 
+We'll start backwards (trying to find the case that terminates the algorithm) and work our way from there.
 
 Let's say we have an empty array: well, that would look like this:
-If the array is empty, then it makes sense that its sum is 0. 
+If the array is empty, then it makes sense that its sum is 0.
 
-Let's start writing some code to express that: 
+Let's start writing some code to express that:
 
 ```{.c .numberLines}
 int sum_empty_arr(int arr*, size_t len) {
@@ -36,22 +36,22 @@ int sum(int arr*, size_t len) {
   if (len == 0) {
     return sum_empty_arr(arr, len);
   } else {
-    // In the next section! 
+    // In the next section!
   }
 }
 ```
 
 And hey, that's the only base case.
 
-## Continuing the Recursion 
+## Continuing the Recursion
 
 To continue the recursion, let's continue thinking: if we have a one item array, what do we do?
 
-A one item array's sum can be expressed like this: 
+A one item array's sum can be expressed like this:
 
 `arr[0] + 0`.
 
-Let's take `{1, 2}` as our array. Well, the sum of the array `{1, 2}` can be expressed like this: 
+Let's take `{1, 2}` as our array. Well, the sum of the array `{1, 2}` can be expressed like this:
 
 `arr[0] + sum({2})`
 
@@ -90,7 +90,7 @@ int sum(int *arr, size_t len) {
 }
 ```
 
-And hey, if we run it: 
+And hey, if we run it:
 
 ```{.c .numberLines}
 int main(void) {
@@ -179,13 +179,13 @@ int sum(TreeNode *node) {
 
 ## Making Progress
 
-Are we making progress? We must be: for every node, we move onto its child nodes. Child nodes (hopefully) eventually return null, in the case of a finite binary tree (of course, we can't calculate the sum of an infinitely large binary tree). 
+Are we making progress? We must be: for every node, we move onto its child nodes. Child nodes (hopefully) eventually return null, in the case of a finite binary tree (of course, we can't calculate the sum of an infinitely large binary tree).
 
 We did it! We can take this same idea and apply it to linked lists and graphs as well. That'll be an exercise for the reader, but the idea is very similar.
 
-## Appendix 
+## Appendix
 
-Full code to sum of the nodes of a binary tree: 
+Full code to sum of the nodes of a binary tree:
 
 In C:
 
@@ -224,11 +224,11 @@ class Solution {
 In OCaml:
 
 ```{.ml .numberLines}
-type 'a tree = 
+type 'a tree =
   | Node of 'a tree * 'a * 'a tree
   | Leaf;;
 
-let rec fold_tree f a t = 
+let rec fold_tree f a t =
     match t with
       | Leaf -> a
       | Node (l, x, r) -> f x (fold_tree f a l) (fold_tree f a r);;

@@ -20,6 +20,7 @@ site/index.html: $(OUT) make_index.py templates/index.html
 mkdirs:
 	mkdir -p site/gen
 	cp -r assets site
+	cp templates/*.css site
 
 # Shortcuts
 open: all
