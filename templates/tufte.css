@@ -44,21 +44,21 @@ html {
     font-size: 16px;
 }
 
-@media screen and (400px <= width <= 700px) {
-  html {
-    font-size: 16px;
+@media screen and (min-width: 400px) and (max-width: 800 px) {
+  body {
+    max-width: 400px;
   }
 }
 
 @media screen and (1200px <= width <= 1800px) {
-  html {
-    font-size: 18px;
+  body {
+    max-width: 1000px;
   }
 }
 
 @media screen and (1800 <= width) {
-  html {
-    font-size: 20px;
+  body {
+    max-width: 1600px;
   }
 }
 
@@ -66,13 +66,13 @@ body {
     width: 87.5%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 12.5%;
     font-family: et-book, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
     background-color: #fffff8;
     color: #111;
-    max-width: 1400px;
     counter-reset: sidenote-counter;
 }
+
+
 
 /* Adds dark mode */
 @media (prefers-color-scheme: dark) {
@@ -319,15 +319,25 @@ img {
 
 .sidenote-number:after {
     content: counter(sidenote-counter);
-    font-size: 1rem;
+    font-size: 1.0rem;
     top: -0.5rem;
     left: 0.1rem;
 }
 
 .sidenote:before {
     content: counter(sidenote-counter) " ";
-    font-size: 1rem;
+    font-size: 1.0rem;
     top: -0.5rem;
+}
+
+
+@media screen and (min-width: 200px) and (max-width: 800px) {
+  .sidenote:before {
+    font-size: 1.5rem;
+  }
+  .sidenote-number:after {
+    font-size: 1.5rem;
+  }
 }
 
 blockquote .sidenote,
