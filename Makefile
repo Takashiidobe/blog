@@ -9,7 +9,7 @@ deploy: all rss
 	ntl deploy --prod
 
 site/gen/%.html: posts/%.md templates/post.html
-	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --mathjax --filter pandoc-sidenote --section-divs --template templates/post.html
+	/bin/pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --mathjax --filter pandoc-sidenote --section-divs --template templates/post.html
 
 site/index.html: $(OUT) make_index.py templates/index.html
 	python3 make_index.py
