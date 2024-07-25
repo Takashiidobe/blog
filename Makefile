@@ -32,7 +32,6 @@ $(OUT_DIR)/rss.xml: $(OUT)
 mkdirs:
 	mkdir -p site/gen
 	cp -r assets site
-	cp -r et-book site
 	cp templates/*.css site
 
 # Shortcuts
