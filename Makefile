@@ -10,7 +10,7 @@ deploy: all $(OUT_DIR)/robots.txt $(OUT_DIR)/sitemap.xml $(OUT_DIR)/rss.xml
 	ntl deploy --prod
 
 $(OUT_DIR)/gen/%.html: posts/%.md templates/post.html
-	/bin/pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --mathjax --filter pandoc-sidenote --section-divs --template templates/post.html
+	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --mathjax --filter pandoc-sidenote --section-divs --template templates/post.html
 
 $(OUT_DIR)/index.html: $(OUT) make_index.py templates/index.html
 	python3 make_index.py
