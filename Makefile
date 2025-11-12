@@ -7,7 +7,6 @@ OUT=$(patsubst posts/%.md, site/gen/%.html, $(POSTS))
 all: mkdirs $(OUT) site/index.html
 
 deploy: all $(OUT_DIR)/robots.txt $(OUT_DIR)/sitemap.xml $(OUT_DIR)/rss.xml
-	ntl deploy --prod
 
 $(OUT_DIR)/gen/%.html: posts/%.md templates/post.html
 	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --mathjax --filter pandoc-sidenote --section-divs --template templates/post.html
