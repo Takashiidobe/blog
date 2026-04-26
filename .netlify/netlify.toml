@@ -7,10 +7,10 @@ headers = []
 [functions."*"]
 
 [build]
-publish = "/home/takashi/monorepo/blog/site"
+publish = "/home/takashi/blog/site"
 publishOrigin = "config"
-commandOrigin = "ui"
-base = "/home/takashi/monorepo/blog"
+commandOrigin = "config"
+base = "/home/takashi/blog"
 command = "make deploy"
 
 [build.environment]

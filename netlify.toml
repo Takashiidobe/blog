@@ -1,5 +1,7 @@
 [build]
-publish = "./site"
+base = "."
+command = "make deploy"
+publish = "site"
 
 [[redirects]]
 from = "/*"
