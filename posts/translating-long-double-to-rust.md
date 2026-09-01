@@ -4,9 +4,10 @@ date: 2026-08-12T12:04:52-04:00
 draft: false
 ---
 
-I've been working on Slate, a C to Rust translator. There are a few
-particularly thorny parts of translating C to Rust, but given how much
-`long double` made me suffer, I've decided to write it up.
+I've been working on [Slate](https://github.com/takashiidobe/slate),
+a C to Rust translator. There are a few particularly thorny parts of
+translating C to Rust, but given how much `long double` made me suffer,
+I've decided to write it up.
 
 If you've never used `long double`, you may breathe a sigh of relief. If
 you use either `f64` (`double`) or `f128`s (`_Float128/__float128`)
@@ -56,10 +57,11 @@ any long double function that has been translated to rust, and call a
 non-translated C function, the bits are all perfectly legal.
 
 Sadly, long doubles are passed in floating point registers, whereas
-these chars would not be, so this won't work.
+these chars are passed in general purpose registers, so trying to
+implement this as is will cause corruption.
 
-If we need to change the registers passed in, we would have to implement
-it ourselves and use the backing type as storage.
+We can have the rust type be plain bytes and implement every operation
+as asm:
 
 ```rust
 pub unsafe fn add(self, rhs: Self) -> Self {
@@ -91,11 +93,11 @@ pub unsafe fn add(self, rhs: Self) -> Self {
 }
 ```
 
-This now works, but you would have to implement each operation
-yourself for every possible operation.
+This works, but you would have to implement every primitive long double
+op yourself in handwritten assembly. (If you heard a groan, that was
+me).
 
-There's actually a nice trick you can do as long as you control all of
-the C files: you can shim the calls and let libc do the rest.
+Instead, here's a nice trick: you can shim the calls and let libc do the rest.
 
 So on the rust side:
 
