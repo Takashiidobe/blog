@@ -384,6 +384,12 @@ table {
 	width: 100%
 }
 
+.table-wrap {
+	/* scroll wide tables horizontally instead of letting them push past the container */
+	max-width: 100%;
+	overflow-x: auto;
+}
+
 td,
 th {
 	border: 1px solid var(--nc-bg-3);

@@ -143,9 +143,99 @@ the shared code. So:
 - Case 2's own arm is deleted, because its body _is_ the shared trailing
   code.
 
-Since we're only covering converting switch with fallthrough to switch
-without fallthrough, relooper is a little too heavy-handed here, and
-doesn't emit ideal code.
+Basically, Relooper will add an outer loop with break label for every
+fallthrough case, minus 1. So in this case, let's count the fallthroughs:
+
+```c
+switch (x) {
+case -500 ... -1: // 1
+  out += 100;
+case 0:
+case 1: // 2
+  out += 1;
+case 2 ... 100: // 3
+  out += 2;
+  if (out > 50) {
+    break;
+  }
+  out += 3;
+case 101: // 4
+  out += 4;
+  if (x % 2 == 0) {
+    break;
+  }
+default: // 5
+  out += 5;
+case 200 ... 500:
+case 600:
+case 700 ... 900:
+  out += 6;
+  break;
+case 999: // 6
+  out += 7;
+case 1000: // 7
+  out += 8;
+}
+```
+
+Since there are 7 fallthroughs, there will be 6 wrapping loops
+generated, making this code hard to read:
+
+```rust
+'s_73: {
+    'c_720: {
+        'c_700: {
+            'c_698: {
+                'c_695: {
+                    'c_704: {
+                        match x {
+                            -500 => {
+                                out += 100 ;
+                            }
+                            0 | 1 => {}
+                            2 => {
+                                break 'c_695;
+                            }
+                            101 => {
+                                break 'c_698;
+                            }
+                            200 | 600 | 700 => {
+                                break 'c_720;
+                            }
+                            999 => {
+                                out += 7;
+                                break 'c_704;
+                            }
+                            1000 => {
+                                break 'c_704;
+                            }
+                            _ => {
+                                break 'c_700;
+                            }
+                        }
+                        out += 1;
+                        break 'c_695;
+                    }
+                    out += 8;
+                    break 's_73;
+                }
+                out += 2;
+                if out > 50 {
+                    break 's_73;
+                } else {
+                    out += 3;
+                }
+            }
+            out += 4;
+            if x % 2 == 0 {
+                break 's_73;
+            }
+        }
+        out += 5;
+    }
+    out += 6;
+}
+```
 
 ## The Structured Programming Theorem: Folk version
 
@@ -170,6 +260,7 @@ This program emulates the C's switch code perfectly.
 {
     let mut x = 1; // what we call the function with, in this case 1
     {
+        // the mapping of switch cases to unique blocks:
         let mut __switch_case0: i32 = match x {
             1 => 0,
             2 => 1,
@@ -181,11 +272,15 @@ This program emulates the C's switch code perfectly.
             match __switch_case0 {
                 0 => {
                     out += 10;
+                    // in the fallthrough case, we increment __switch_case by 1
+                    // and then continue
                     __switch_case0 = 1;
                     continue '__switch0;
                 }
                 1 => {
                     out += 20;
+                    // for a fallthrough case we generate a break. This
+                    // can be elided, but it's left here to be explicit
                     break '__switch0;
                 }
                 2 => {
@@ -209,19 +304,112 @@ This program emulates the C's switch code perfectly.
 }
 ```
 
-This works but it's worse to read than the relooper version.
-However, note that the control flow graph
+This version is worse than what relooper generates. However, for the
+7 fallthrough version, note that we're guaranteed only one outer loop
+for our match, because the dispatcher (`__switch_case0`) at the top
+handles control flow.
+
+Personally, I find this much more readable than 7 nested levels, so I
+chose this as the default lowering representation of a switch.
+
+```rust
+{
+    let mut out: i32 = 0;
+    {
+        let __switch_value0 = ...; // whatever the value is
+        let mut __switch_case0: i32 = match __switch_value0 {
+            -500..=-1 => 0,
+            0 => 1,
+            1 => 2,
+            2..=100 => 3,
+            101 => 4,
+            200..=500 => 6,
+            600 => 7,
+            700..=900 => 8,
+            999 => 9,
+            1000 => 10,
+            _ => 5,
+        };
+        '__switch0: loop {
+            match __switch_case0 {
+                0 => {
+                    out += 100;
+                    __switch_case0 = 1;
+                    continue '__switch0;
+                }
+                1 => {
+                    __switch_case0 = 2;
+                    continue '__switch0;
+                }
+                2 => {
+                    out += 1;
+                    __switch_case0 = 3;
+                    continue '__switch0;
+                }
+                3 => {
+                    out += 2;
+                    if out > 50 {
+                        break '__switch0;
+                    }
+                    out += 3;
+                    __switch_case0 = 4;
+                    continue '__switch0;
+                }
+                4 => {
+                    out += 4;
+                    if x % 2 == 0 {
+                        break '__switch0;
+                    }
+                    __switch_case0 = 5;
+                    continue '__switch0;
+                }
+                5 => {
+                    out += 5;
+                    __switch_case0 = 6;
+                    continue '__switch0;
+                }
+                6 => {
+                    __switch_case0 = 7;
+                    continue '__switch0;
+                }
+                7 => {
+                    __switch_case0 = 8;
+                    continue '__switch0;
+                }
+                8 => {
+                    out += 6;
+                    break '__switch0;
+                }
+                9 => {
+                    out += 7;
+                    __switch_case0 = 10;
+                    continue '__switch0;
+                }
+                10 => {
+                    out += 8;
+                    break '__switch0;
+                }
+                _ => {
+                    break '__switch0;
+                }
+            }
+        }
+    }
+}
+```
+
+Now let's do better. Note that the CFG
 only goes one direction (down). So each node in the CFG does the following:
 
 1. Executes its block
-2. Either (breaks or falls through to the next branch)
+2. Either (breaks to end or falls through to the next branch)
 
 We can use this to optimize our representation of our match by taking
 the switch case bottom up. The rules are simple:
 
 - `default` is translated to `_`. Keep in mind that `default` can
   fallthrough (`_` in rust cannot) so we must always move the `_` pattern
-  to the end of the switch case.
+  to the end of the switch case and handle fallthrough.
 - We traverse the switch case bottom-up, and collect the blocks we've
   seen in reverse order and the labels we've seen. On break, for each
   label we'll write the blocks we've seen in reverse order (since we're
@@ -310,6 +498,82 @@ match x {
 ```
 
 Which is exactly what I would handwrite in a translation.
+
+With a little range coalescing, this also handles the 7 fallthrough
+case:
+
+```rust
+match x {
+    -500..=-1 => {
+        out += 100;
+        out += 1;
+        out += 2;
+        if out > 50 {
+        } else {
+            out += 3;
+            out += 4;
+            if x % 2 == 0 {
+            } else {
+                out += 5;
+                out += 6;
+            }
+        }
+    }
+    0 | 1 => {
+        out += 1;
+        out += 2;
+        if out > 50 {
+        } else {
+            out += 3;
+            out += 4;
+            if x % 2 == 0 {
+            } else {
+                out += 5;
+                out += 6;
+            }
+        }
+    }
+    2..=100 => {
+        out += 2;
+        if out > 50 {
+        } else {
+            out += 3;
+            out += 4;
+            if x % 2 == 0 {
+            } else {
+                out += 5;
+                out += 6;
+            }
+        }
+    }
+    101 => {
+        out += 4;
+        if x % 2 == 0 {
+        } else {
+            out += 5;
+            out += 6;
+        }
+    }
+    200..=500 | 600 | 700..=900 => {
+        out += 6;
+    }
+    999 => {
+        out += 7;
+        out += 8;
+    }
+    1000 => {
+        out += 8;
+    }
+    _ => {
+        out += 5;
+        out += 6;
+    }
+}
+```
+
+Some improvement could be made to hoist the `if out > 50 {} else {}` out,
+since there are lots of repeated sub blocks here, but that's for another
+time.
 
 ## Generality ain't all it's cracked up to be
 

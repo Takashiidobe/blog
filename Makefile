@@ -8,8 +8,17 @@ all: mkdirs $(OUT) site/index.html
 
 deploy: all $(OUT_DIR)/robots.txt $(OUT_DIR)/sitemap.xml $(OUT_DIR)/rss.xml
 
-$(OUT_DIR)/gen/%.html: posts/%.md templates/post.html bin/build_post.py
-	./bin/build_post.py $< $@ -f markdown+fenced_divs -s --table-of-contents --mathjax --lua-filter ~/.local/share/pandoc/filters/pandoc-sidenote.lua --section-divs --template templates/post.html
+$(OUT_DIR)/gen/%.html: posts/%.md templates/post.html bin/build_post.py bin/table-wrap.lua
+	./bin/build_post.py $< $@ -f markdown+fenced_divs -s --table-of-contents --mathjax --lua-filter ~/.local/share/pandoc/filters/pandoc-sidenote.lua --lua-filter bin/table-wrap.lua --section-divs --template templates/post.html
+
+# Adds each post as a prerequisite of just its adjacent (older/newer) posts'
+# targets, so adding/editing one post only rebuilds the neighbors whose
+# prev/next arrow it affects, not the whole site.
+$(OUT_DIR)/.deps.mk: bin/gen_deps.py $(POSTS)
+	@mkdir -p $(OUT_DIR)
+	./bin/gen_deps.py > $@
+
+-include $(OUT_DIR)/.deps.mk
 
 $(OUT_DIR)/index.html: $(OUT) make_index.py templates/index.html
 	python3 make_index.py
