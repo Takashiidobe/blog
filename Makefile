@@ -8,8 +8,8 @@ all: mkdirs $(OUT) site/index.html
 
 deploy: all $(OUT_DIR)/robots.txt $(OUT_DIR)/sitemap.xml $(OUT_DIR)/rss.xml
 
-$(OUT_DIR)/gen/%.html: posts/%.md templates/post.html
-	pandoc -f markdown+fenced_divs -s $< -o $@ --table-of-contents --mathjax --lua-filter ~/.local/share/pandoc/filters/pandoc-sidenote.lua --section-divs --template templates/post.html
+$(OUT_DIR)/gen/%.html: posts/%.md templates/post.html bin/build_post.py
+	./bin/build_post.py $< $@ -f markdown+fenced_divs -s --table-of-contents --mathjax --lua-filter ~/.local/share/pandoc/filters/pandoc-sidenote.lua --section-divs --template templates/post.html
 
 $(OUT_DIR)/index.html: $(OUT) make_index.py templates/index.html
 	python3 make_index.py

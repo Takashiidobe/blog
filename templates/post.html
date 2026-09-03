@@ -61,6 +61,11 @@ $toc$
 $endif$
 $body$
 </article>
+<nav class="post-nav">
+<span class="post-nav-prev">$if(prev-url)$<a href="$prev-url$">&larr; $prev-title$</a>$endif$</span>
+<a class="post-nav-home" href="../index.html">Home</a>
+<span class="post-nav-next">$if(next-url)$<a href="$next-url$">$next-title$ &rarr;</a>$endif$</span>
+</nav>
 $for(include-after)$
 $include-after$
 $endfor$

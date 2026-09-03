@@ -449,3 +449,26 @@ input {
 img {
 	max-width: 100%;
 }
+
+.post-nav {
+	display: flex;
+	align-items: center;
+	margin-top: 2rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--nc-bg-3);
+}
+
+.post-nav-prev,
+.post-nav-next {
+	flex: 1 0 0;
+	white-space: nowrap;
+}
+
+.post-nav-next {
+	text-align: right;
+}
+
+.post-nav-home {
+	flex: 0 0 auto;
+	padding: 0 1rem;
+}
