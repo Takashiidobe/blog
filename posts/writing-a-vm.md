@@ -43,7 +43,6 @@ $ objdump -d a.out
 
 So our instructions are encoded as `48 c7 c0 0a 00 00 00 c3` as bytes.
 
-
 `mov $10 %rax` corresponds to `48 c7 c0 0a 00 00 00`, and
 `ret` turns into `c3`.
 

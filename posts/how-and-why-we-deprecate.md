@@ -10,7 +10,7 @@ When writing code that other people use, it's important to be able to deprecate 
 
 1. We've found an alternative way to do something that we think is better than the previous way.
 2. The code is written in a way that it isn't correct, and can't be fixed without changing it in a non-breaking fashion.
-3. The feature is extraneous, and can be done better by using some other code. 
+3. The feature is extraneous, and can be done better by using some other code.
 4. We've found a better name for this code.
 
 Let's go through the reasons:
@@ -21,12 +21,11 @@ This is the most common kind of deprecation. Let's take the example of `std::aut
 
 `std::auto_ptr` in C++ was introduced in C++03 as the first smart pointer in the standard library. When `auto_ptr` would go out of scope, it would call the destructor of the thing it owned.
 
-It was the best possible unique pointer at the time, because C++ did not have move semantics. As such, the `=` operator would copy an `auto_ptr`, which is confusing to users. If a pointer is meant to uniquely own a resource, we should not be able to make copies of it, because that violates the invariant of it being unique. 
+It was the best possible unique pointer at the time, because C++ did not have move semantics. As such, the `=` operator would copy an `auto_ptr`, which is confusing to users. If a pointer is meant to uniquely own a resource, we should not be able to make copies of it, because that violates the invariant of it being unique.
 
-In C++, move semantics were introduced, where a `=` operator was overloaded to move what was on the right hand side to the left hand side. Therefore, the new smart pointer would to overload move semantics on a call to `=`. But since users used the `=` operator to mean copy construction, this would be a backwards incompatible change. 
+In C++, move semantics were introduced, where a `=` operator was overloaded to move what was on the right hand side to the left hand side. Therefore, the new smart pointer would to overload move semantics on a call to `=`. But since users used the `=` operator to mean copy construction, this would be a backwards incompatible change.
 
 Thus, the committee decided to deprecate `auto_ptr` and create a new smart pointer called `unique_ptr` that was similar in behavior, except it was not copyable.
-
 
 ```{.cpp .numberLines}
 std::auto_ptr<Widget> p1(new Widget());
@@ -53,7 +52,7 @@ Sometimes we implement code in a way that isn't correct. Either it gives you the
 
 Well, since `gets` doesn't allow you to specify up to how many bytes to take, you can overwrite your own address space, crashing your own program. Wonderful design.
 
-Using `fgets` is considered better, since it takes a `size` of characters to write at max. Thus, if you correctly call `fgets` (you make your count as large as your buffer), you can't overwrite your own address space. (Of course you still have to use `fgets` properly, but we're trusting you). 
+Using `fgets` is considered better, since it takes a `size` of characters to write at max. Thus, if you correctly call `fgets` (you make your count as large as your buffer), you can't overwrite your own address space. (Of course you still have to use `fgets` properly, but we're trusting you).
 
 We all write bad code. Sometimes innocuous design decisions can come back to bite us. Deprecation gives us a tool to fix those mistakes.
 
@@ -61,17 +60,17 @@ We all write bad code. Sometimes innocuous design decisions can come back to bit
 
 In C and C++, there are trigraphs which represent the following symbols:
 
-| Trigraph | Equivalent  |
-|:--------:|:-----------:|
-| ??=      | #           |
-| ??/      | \           |
-| ??'      | ^           |
-| ??(      | [           |
-| ??)      | ]           |
-| ??!      | \|          |
-| ??<      | {           |
-| ??>      | }           |
-| ??-      | ~           |
+| Trigraph | Equivalent |
+| :------: | :--------: |
+|   ??=    |     #      |
+|   ??/    |     \      |
+|   ??'    |     ^      |
+|   ??(    |     [      |
+|   ??)    |     ]      |
+|   ??!    |     \|     |
+|   ??<    |     {      |
+|   ??>    |     }      |
+|   ??-    |     ~      |
 
 Since not all keyboards might have these symbols, the standard allowed you to write these symbols with an ASCII compliant keyboard.
 
@@ -81,17 +80,17 @@ Thus, in C++17, this feature was removed, since it wasn't used anymore. Talks to
 
 ## Better Naming
 
-In Java, the `FontMetrics` library has two functions. One is called `getMaxDecent`, and the other is called `getMaxDescent`. 
+In Java, the `FontMetrics` library has two functions. One is called `getMaxDecent`, and the other is called `getMaxDescent`.
 
-`getMaxDecent` is a spelling error. 
+`getMaxDecent` is a spelling error.
 
 As such, `getMaxDecent` has been deprecated, and users are told to use `getMaxDescent`.
 
-Whoops. 
+Whoops.
 
-Spelling matters, especially for users. 
+Spelling matters, especially for users.
 
-Outside of spelling mistakes, sometimes you find a better name. In Rails 6, `update_attributes` was deprecated in favor of `update`.  `update_attributes` is clearer to me, but `ActiveRecord` has other methods like `create`, which more closely align with `update`. In order to make Rails more intuitive, they've deprecated `update_attributes` in favor of `update`.
+Outside of spelling mistakes, sometimes you find a better name. In Rails 6, `update_attributes` was deprecated in favor of `update`. `update_attributes` is clearer to me, but `ActiveRecord` has other methods like `create`, which more closely align with `update`. In order to make Rails more intuitive, they've deprecated `update_attributes` in favor of `update`.
 
 Nice.
 
@@ -122,7 +121,7 @@ Java has provided the `@Deprecated` annotation since Java 5 to signal deprecatio
 public class Example {
   @Deprecated
   public int deprecated() {
-    return 42; 
+    return 42;
   }
 
   public int betterMethod() {

@@ -173,10 +173,10 @@ First off, let's start off with the basics. The simplest solution I
 could think of was to:
 
 1. For each line, split at the ';' character.
-    - The left side is the station name.
-    - The right side is the temperature. 
-    - Take the temperature, and then record the current total, current
-      count, current minimum, and current maximum.
+   - The left side is the station name.
+   - The right side is the temperature.
+   - Take the temperature, and then record the current total, current
+     count, current minimum, and current maximum.
 2. Sort the cities.
 3. Calculate the mean by doing sum / count;
 4. Print out "{city};{min};{mean};{max}" for each city.
@@ -217,7 +217,6 @@ is taking the longest amount of time, so we should tackle that first.
 
 <object type="image/svg+xml" data="../assets/obrc/btreemap.svg" width="100%" height="100%">
 </object>
-
 
 ## The Next Solution (HashMap)
 
@@ -290,17 +289,17 @@ using a HashMap was already pretty good. But the flamegraph does show
 that `parse_temperature_tenths_bytes` is pretty slow (32% of runtime),
 so let's dig into that.
 
-The current implementation is: 
+The current implementation is:
 
 ```rust
 fn parse_temperature_tenths_bytes(value: &[u8]) -> io::Result<Temp> {
     let negative = value.first() == Some(&b'-');
     let digits = if negative { &value[1..] } else { value };
-                                                                                                                              
+
     if digits.len() < 3 || digits[digits.len() - 2] != b'.' {
         return Err(invalid_temperature_bytes(value));
     }
-                                                                                                                       
+
     let whole = &digits[..digits.len() - 2];
     let fraction = digits[digits.len() - 1];
     if whole.is_empty()
@@ -309,14 +308,14 @@ fn parse_temperature_tenths_bytes(value: &[u8]) -> io::Result<Temp> {
     {
         return Err(invalid_temperature_bytes(value));
     }
-                                                                                                                       
+
     let mut temp = Temp::from(fraction - b'0');
     let mut multiplier = 10;
     for &digit in whole.iter().rev() {
         temp += Temp::from(digit - b'0') * multiplier;
         multiplier *= 10;
     }
-                                                                                                                       
+
     Ok(if negative { -temp } else { temp })
 }
 ```
@@ -344,7 +343,6 @@ improvement, but also dropping the variance between runs. We used to
 have about 5-8ms variance, but now this is less than <1ms between runs,
 since branchless solutions are more consistent.
 
-
 <object type="image/svg+xml" data="../assets/obrc/hashmap-mmap-branchless-bytes.svg" width="100%" height="100%">
 </object>
 
@@ -352,7 +350,7 @@ since branchless solutions are more consistent.
 
 Why bother having strings at all? Why not index a city by its bytes? We
 can do that and combined with a faster hashmap (Fnv), I got a 60ms
-runtime on my computer. 
+runtime on my computer.
 
 ```rust
 pub struct FnvBytesSolver {
@@ -390,7 +388,7 @@ impl Solver for FnvBytesSolver {
 
 At this point, I had about hit wits end. About 48% of runtime was in
 FnvHasher's `get_mut`, and otherwise about 17% of runtime was in
-`float_to_decimal_common_exact`. 
+`float_to_decimal_common_exact`.
 
 So the next two things are to remove the hashmap and fix the output
 formatting.
@@ -416,7 +414,7 @@ fn table_index(fp: u64, key_len: usize) -> usize {
     (h as usize) & TABLE_MASK
 }
 
-const TABLE_SIZE: usize = 1 << 17; 
+const TABLE_SIZE: usize = 1 << 17;
 
 struct Slot<'a> {
     fingerprint: u64,
@@ -434,7 +432,7 @@ impl<'a> FlatTable<'a> {
         let mut idx = table_index(fp, key.len());
         loop {
             let slot = &mut self.slots[idx];
-            if slot.key.is_empty() {               
+            if slot.key.is_empty() {
                 slot.fingerprint = fp;
                 slot.key = key;
                 slot.stats = Stats::default();
@@ -445,7 +443,7 @@ impl<'a> FlatTable<'a> {
                 slot.stats.add(temp);
                 return;
             }
-            idx = (idx + 1) & TABLE_MASK; 
+            idx = (idx + 1) & TABLE_MASK;
         }
     }
 }
@@ -485,7 +483,7 @@ solution any more. I decided to drop --no-inline from my cargo
 flamegraphs since it said 90% of runtime was in `process_bytes` and the
 rest was inlined into it. But looking at the flamegraph while counting
 inlining, it seems like it's doing about the minimal amount of work
-required. 
+required.
 
 A simple way to use parallelism is to cut the input into equal sized
 chunks by the number of threads, and then join at the end.
@@ -518,7 +516,7 @@ fn align_end_to_line(bytes: &[u8], pos: usize) -> usize {
 
 To run in parallel:
 
-```rust 
+```rust
 pub fn run_parallel_borrowed_mmap(input_path: &str, output_path: Option<&str>, threads: usize) -> io::Result<()> {
     let file = File::open(input_path)?;
     let mmap = unsafe { MmapOptions::new().map(&file)? };
@@ -584,7 +582,7 @@ In the end, we started out with about a 220ms runtime and got it down
 all the way to 21ms, about a 10x improvement. The first improvement of
 just using a hashmap did most of the work, down to 110ms, and each
 respective improvement took more and more work to do for less and less
-gain. 
+gain.
 
 Cargo flamegraph made it easy to find hotspots, but it doesn't tell you
 how to improve your solution -- that requires hard thought, but it's

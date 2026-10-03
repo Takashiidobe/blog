@@ -10,9 +10,9 @@ Why cross compile? Well, given that we want our programs to be
 accessible to as many users as possible, we should want users of many
 platforms being able to use our programs.
 
-Why does programming language matter in this case? If you choose a language 
+Why does programming language matter in this case? If you choose a language
 that compiles bytecode, you can only run the code on platforms that can
-run the VM for your code. 
+run the VM for your code.
 
 ## Python
 
@@ -36,10 +36,10 @@ java supports the following architectures:
 - x86_64,
 - Sparc64
 - Armv7hf
-- ARM64/AArch64 
+- ARM64/AArch64
 
 It's pretty clear that neither Java or Python support a wide range of
-architectures. It's not impossible to port these languages, 
+architectures. It's not impossible to port these languages,
 but it is a difficult task to port the language and their standard
 libraries, so the developers decided to only target popular architectures.
 
@@ -191,7 +191,7 @@ file from llvm: <https://llvm.org/doxygen/Triple_8h_source.html>.
 - ve,
 
 There's no comparison. Languages that target gcc and llvm support a
-wider array of architectures. If you're using a less popular architecture, 
+wider array of architectures. If you're using a less popular architecture,
 and your library writers are using gcc or clang, you're in luck. If they arent't, you're SOL.
 
 ## A Note on standard libraries

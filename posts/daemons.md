@@ -16,7 +16,7 @@ A daemon shouldn't be reachable from the outside world, and it should do
 a task on some activity or change. You can run one or as many of them as
 you want to -- maybe you want just one like a singleton, or many
 splitting up a task, or you can emulate a single writer many readers
-pattern. 
+pattern.
 
 Regardless, here's the checklist of "how to daemon"
 
@@ -40,7 +40,7 @@ daemons. If you choose a higher level language like Rust or Python,
 setting up a daemon is 15 lines of code.
 
 In C, the setup code is closer to 40 lines, but it's not that bad
-regardless with `libdaemon`  -- it sets up steps 1 to 7 for us.
+regardless with `libdaemon` -- it sets up steps 1 to 7 for us.
 That leaves just a few steps. We set the path for the pidfile, and
 register it with `daemon_pid_file_proc` for it to be set up in the
 `daemon_pid_file_create` call later, returning if we couldn't create it.
@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
   dprintf(results_fd, "# byte count request daemon started pid=%d\n", getpid());
   while (!stop_flag) {
     log_file_size(request_path, results_fd);
-    nanosleep(&(struct timespec){5, 0}, NULL); 
+    nanosleep(&(struct timespec){5, 0}, NULL);
   }
 
   // 8.

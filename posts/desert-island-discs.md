@@ -1,10 +1,10 @@
 ---
 title: "Desert Island Discs"
 date: 2021-09-06T22:47:22-05:00
-draft: false 
+draft: false
 ---
 
-What would be the eight software programs you would take to a deserted island? To me, I'd need the following: an OS, libc, a C compiler, a shell, a database, a networking stack, unix utils, a lisp interpreter, and an editor. I've decided to try my hand at writing these to get better at low-level programming, and learn the stack a bit better. It's a good challenge, but in the interest of time and sanity I will be putting lots of asterisks next to each disc. 
+What would be the eight software programs you would take to a deserted island? To me, I'd need the following: an OS, libc, a C compiler, a shell, a database, a networking stack, unix utils, a lisp interpreter, and an editor. I've decided to try my hand at writing these to get better at low-level programming, and learn the stack a bit better. It's a good challenge, but in the interest of time and sanity I will be putting lots of asterisks next to each disc.
 
 ## An Operating System
 

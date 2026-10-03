@@ -15,7 +15,6 @@ Let's put that to the test.
 I have this code here that defines `strnlen` from linux's m68k tree.
 This computes `strnlen` as you would expect.
 
-
 ```c
 static inline size_t strnlen_asm(const char *s, size_t count)
 {
@@ -40,8 +39,8 @@ static inline size_t strnlen(const char *s, size_t count)
 {
     const char *sc = s;
     while (count--) {
-        if (*sc++ == '\0') {   
-            sc--;              
+        if (*sc++ == '\0') {
+            sc--;
             break;
         }
     }
@@ -141,7 +140,7 @@ However, the real changes happens at `-O3` which has very aggressive
 inlining: let's say our program is:
 
 ```c
-int main() 
+int main()
 {
     size_t n = strnlen_asm("hello", 8);
     size_t c = strnlen("hello", 8);
@@ -158,7 +157,7 @@ main:
 	moveq #8,%d0 | < and 8 as the second arg
 #APP | < this is the start of the assembly version
 | 5 "test.c" 1
-	
+
 1:     subq.l  #1,%d0
        jcs     2f
        tst.b   (%a0)+
@@ -196,7 +195,7 @@ past this:
 
 Whereas for the C version, we saw it could range from pretty bad code to
 a constant which is folded into a previous instruction, which is as
-optimal as can be. 
+optimal as can be.
 
 ## Why this matters
 

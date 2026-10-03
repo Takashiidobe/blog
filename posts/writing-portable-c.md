@@ -186,6 +186,6 @@ architectures, and compile to them easily, all for free, with the power
 of open source (and Microsoft's wallet, thanks Github Actions).
 
 With this, I was able to build for 52 architectures and release code for
-them (I ended up adding in support for x86\_64 Darwin and arm64 Darwin).
+them (I ended up adding in support for x86_64 Darwin and arm64 Darwin).
 
 Viva portable code.

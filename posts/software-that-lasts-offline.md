@@ -1,12 +1,12 @@
 ---
 title: "Software that lasts Offline"
 date: 2021-10-01T23:05:13-05:00
-draft: false 
+draft: false
 ---
 
 It seems like every day software gets outdated. It's so hard to build software that lasts for 3 years, let alone 30. Yet the houses we live in have seen much longer lives, with just a bit of refurbishing here and there. Why can't our software be the same way? \_why the lucky stiff said something that resounds with me as a programmer as he left the internet.
 
-> To Program anymore was pointless. 
+> To Program anymore was pointless.
 >
 > My programs would never live as long as the trial.
 >
@@ -17,11 +17,10 @@ It seems like every day software gets outdated. It's so hard to build software t
 > Can an unfinished program be reconstructed??
 >
 > Can I write a program and go, "Ah, Well, You get the gist of it."
->
 
 Our software doesn't last as long as the written word. It's a very defeating thing to think that most of our code doesn't last that long. I wondered if it had to be this way, or if it was something to do with how we approached software writing. C code has lasted for a few decades, and could last a few more -- there's lots of COBOL and FORTRAN code in the wild that's 50 years old. Software that lasts is both high-level and low-level at the same time -- assembly would never last because it's tied to its platform.
 
-A higher-level language need not be tied to any specific architecture. Yet the need for compatibility with architectures, past, present, and future makes it so the language must only build off of low-level primitives. A contradiction. 
+A higher-level language need not be tied to any specific architecture. Yet the need for compatibility with architectures, past, present, and future makes it so the language must only build off of low-level primitives. A contradiction.
 
 I want a language that has offline documentation, that is robust, has wide compatibility in the past, present, and future, has standards, has multiple implementations, is fast, and is easy to develop for. Here's a short list of the languages I looked at, with some pros and cons for each in making software that lasts.
 
@@ -31,11 +30,11 @@ Javascript is well specified (by committee), with multiple implementations, and 
 
 ## Typescript
 
-Typescript smooths out *most* of the usability issues of Javascript, and gives it static typing, generics, and new constructs (enums, interfaces, types). It compiles to Javascript quickly, and considering how accessible Javascript is, it shares most of its accessibility pros. That being said, Typescript has more lax backwards compatibility requirements, but with its compatibility to Javascript, won't be able to fix the language's warts. 
+Typescript smooths out _most_ of the usability issues of Javascript, and gives it static typing, generics, and new constructs (enums, interfaces, types). It compiles to Javascript quickly, and considering how accessible Javascript is, it shares most of its accessibility pros. That being said, Typescript has more lax backwards compatibility requirements, but with its compatibility to Javascript, won't be able to fix the language's warts.
 
 ## WASM
 
-Web Assembly is a new contender for web language of the future *TM*. It's a minimalistic language with S-expressions (like lisps) and is meant to be an easy compiler target. Go, C, C++, Rust, and others can compile down to it, targeting the WASM capabilities of the browser. As well, WASI seems like a portable way to run sandboxed applications in the future.
+Web Assembly is a new contender for web language of the future _TM_. It's a minimalistic language with S-expressions (like lisps) and is meant to be an easy compiler target. Go, C, C++, Rust, and others can compile down to it, targeting the WASM capabilities of the browser. As well, WASI seems like a portable way to run sandboxed applications in the future.
 
 It's too low-level for productive use, but is an interesting foray into fixing the kludge of the web.
 
@@ -43,7 +42,7 @@ It's too low-level for productive use, but is an interesting foray into fixing t
 
 Ruby is the most OOP language I can think of -- message passing, everything is an object, and GC pauses ad nauseum. It's a language with a lot of expressiveness, and a lot of elegance. It has strong C bindings, so it has good interop with system libraries -- and pretty good backwards compatibility.
 
-That being said, it's slow and clunky to write. The philosophy of expressiveness means that everybody writes ruby code differently, and there's a huge divide between ruby programmers, who are more restrictive with what functionality they use, and rails programmers, who are more keen on monkey-patching everything they can find for usability reasons. Not to say one side is right, but the language's stewardship has been on appeasing many camps, and that leads to fragmentation. 
+That being said, it's slow and clunky to write. The philosophy of expressiveness means that everybody writes ruby code differently, and there's a huge divide between ruby programmers, who are more restrictive with what functionality they use, and rails programmers, who are more keen on monkey-patching everything they can find for usability reasons. Not to say one side is right, but the language's stewardship has been on appeasing many camps, and that leads to fragmentation.
 
 ## Python
 
@@ -64,13 +63,13 @@ Oh yeah, and remember Python3?
 
 ## OCaml
 
-OCaml is an interesting language; it has a bytecode interpreter, cross compilation, and compilation to native, just like Haskell. It's relatively fast to compile, but has issues with backwards compatibility and footguns. As well, the standard library has been reimplemented by many, including by Jane Street, twice (Base and Core). 
+OCaml is an interesting language; it has a bytecode interpreter, cross compilation, and compilation to native, just like Haskell. It's relatively fast to compile, but has issues with backwards compatibility and footguns. As well, the standard library has been reimplemented by many, including by Jane Street, twice (Base and Core).
 
 It's a clear language with some baggage (Few people use the "Object Oriented" or "O" features of "OCaml"). For loops and classes are often struck down in code review as anti-patterns. Best to be functional, all the time.
 
 It is relatively fast, with a good ecosystem (Dune makes building OCaml apps pretty nice in 2021) but it's still a relatively small ecosystem, fighting against Haskell to become Typed Functional Programming's main language.
 
-Offline Documentation is great, and the standard library has few wants of its environment, but it lacks multicore support -- in an increasingly parallel world, that's a deal-breaker. It's looking like a reimplementation of the standard library with async might require a major version bump, to (5.X). 
+Offline Documentation is great, and the standard library has few wants of its environment, but it lacks multicore support -- in an increasingly parallel world, that's a deal-breaker. It's looking like a reimplementation of the standard library with async might require a major version bump, to (5.X).
 
 ## JVM languages (Java, Scala, Clojure)
 
@@ -80,9 +79,9 @@ JVM languages are pretty strong, with the JVM allowing users to target many plat
 
 Same as the JVM languages, although I have to say that F# and C# are pretty fun to program in.
 
-## Go 
+## Go
 
-Go was the first *serious* language in the list I considered learning -- simple like C, with a strong standard library for the modern era with a focus on async + web programming.  Sounds like a dream. Oh, and fast compile times and cross-compilation. Woah. Relatively small native binaries that don't rely on libc? Doable in Go.
+Go was the first _serious_ language in the list I considered learning -- simple like C, with a strong standard library for the modern era with a focus on async + web programming. Sounds like a dream. Oh, and fast compile times and cross-compilation. Woah. Relatively small native binaries that don't rely on libc? Doable in Go.
 
 Lots of big projects have been done in go, like most hashicorp stuff, docker, kubernetes, and a wealth of devops/cloud tools. It's a productive language, and one that nudges you to sane defaults.
 
@@ -92,7 +91,7 @@ But it's not all sunshine and roses -- the package managing story has been a nig
 
 C++ is the first language on this list with no Garbage Collection, it has a specification that's ISO standardized, with many committees, and with many implementations. It has functionality for OOP, Functional Programming, Generics, async, with the promise of being as fast as C while staying easier to use.
 
-It mostly capitalizes on that promise. With the advent of modern C++, even though C++ has added many features, it has had a strong promise towards backwards compatibility (it keeps ABI compatibility for a long time, only recently breaking ABI in C++11), and only removing clearly broken functionality (auto\_ptr, anyone?) But it can be hard to use -- (the iterator API is one frustrating example), and it can be hard to see the runtime cost of the abstractions you use -- Even though C++ follows the "Zero-Cost Abstractions" principle, where you don't pay for what you don't use, and what you do use you couldn't hand-code any better, it breaks down somewhat -- `std::map` is extremely slow on certain workloads, because it's just implemented incorrectly -- and Iterators are a good example of an API footgun (remember to always check for `.end()`!). 
+It mostly capitalizes on that promise. With the advent of modern C++, even though C++ has added many features, it has had a strong promise towards backwards compatibility (it keeps ABI compatibility for a long time, only recently breaking ABI in C++11), and only removing clearly broken functionality (auto_ptr, anyone?) But it can be hard to use -- (the iterator API is one frustrating example), and it can be hard to see the runtime cost of the abstractions you use -- Even though C++ follows the "Zero-Cost Abstractions" principle, where you don't pay for what you don't use, and what you do use you couldn't hand-code any better, it breaks down somewhat -- `std::map` is extremely slow on certain workloads, because it's just implemented incorrectly -- and Iterators are a good example of an API footgun (remember to always check for `.end()`!).
 
 The complexity is never really ever paid off -- you have to litter your code with extra keywords like const to the left and right of your functions, along with noexcept, and final, and override. You have to remember what is and what isn't virtual, and use keywords accordingly, and you have to always generate move constructors, copy constructors, and remember which one is which -- why are there so many ways to initialize an object, and why are there so many things to remember when you write your own class?
 
@@ -100,7 +99,7 @@ Oh, and what's the difference between struct and class? Who knows?
 
 C++ is a language with lots of promises but it has run into the limits of its promises -- backwards compatibility, ease of use, performance, and expressiveness are all in tension, and C++ is the language you can see that in the most.
 
-## C 
+## C
 
 Meanwhile, C is much more minimalistic than C++. You get nothing -- no expanding arrays, no hashmaps, no trees, no graphs, no async, no unicode, nothing.
 
@@ -117,4 +116,3 @@ With all that being said, I've decided to pick Rust as my language of choice for
 It's taken some great ideas from functional programming (Tagged Unions, Sum Types, iterators) while keeping the runtime promises of more imperative languages. It's a great language to learn for the future, and one that I'm sure will keep on growing, and for that, I'm throwing my weight behind it.
 
 Rust every day. For 3 years. Then I'll revisit this and see what's changed, but I'd like to use Rust for the next 10 years, at least.
-

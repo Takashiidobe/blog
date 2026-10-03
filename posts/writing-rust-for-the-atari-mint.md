@@ -14,8 +14,8 @@ ebay an Atari ST costs about $200. I reached into my pocket to grab my
 credit card to buy one before coming to the realization that I'm broke.
 Luckily, there's a pretty active community programming these retro
 computers, complete with emulators. I found a couple emulators
-like [aranym](https://aranym.github.io/) [hatari](https://hatari-emu.org/) 
-and went on my way. 
+like [aranym](https://aranym.github.io/) [hatari](https://hatari-emu.org/)
+and went on my way.
 
 You could write code for these emulators in assembly or C, due to there
 being a gcc toolchain for them: <https://tho-otto.de/crossmint.php>. I
@@ -51,8 +51,8 @@ While writing the libc was fun to see what was under the hood, I wanted
 some higher-level code. So I decided I wanted to write Rust. First
 things first -- I downloaded the `a.out` toolchain from Thorsten Otto's
 website. I needed the ELF one, since that was what rust's toolchain
-supported. Next, I had to write up a 
-[target.json file](https://github.com/Takashiidobe/mints/blob/main/m68k-atari-mintelf.json), 
+supported. Next, I had to write up a
+[target.json file](https://github.com/Takashiidobe/mints/blob/main/m68k-atari-mintelf.json),
 describing the properties of the architecture I was targeting.
 
 ```json
@@ -75,12 +75,7 @@ describing the properties of the architecture I was targeting.
   "linker-is-gnu": true,
   "linker-flavor": "gcc",
   "pre-link-args": {
-    "gcc": [
-	  "-nostartfiles",
-      "-nostdlib",
-      "-m68000",
-      "-no-pie"
-    ]
+    "gcc": ["-nostartfiles", "-nostdlib", "-m68000", "-no-pie"]
   },
   "late-link-args": {
     "gcc": [
@@ -115,7 +110,7 @@ However, this requires `posix_memalign`, which `libcmini` does not
 provide. I implemented it in my libc, and was off to the races.
 
 However, Rust turned out to be a pain in a very different way than
-writing C. If you try to implement printing with 
+writing C. If you try to implement printing with
 [Rust's fmt helpers](https://github.com/Takashiidobe/mints/blob/main/src/lib.rs#L38-L43)
 when you try to print a type that can't be "inlined" by the compiler,
 it'll pull in compiler builtins, and bundle a 300KB runtime, bloating

@@ -16,13 +16,13 @@ Let's start off with a `u128` type. That would look something like this:
 ```rust
 #[derive(Debug, Clone, Copy)]
 pub struct Uint128 {
-    pub h: u64, 
-    pub l: u64, 
+    pub h: u64,
+    pub l: u64,
 }
 ```
 
 For addition, subtraction, and multiplication thankfully nightly rust has
-`overflowing_*`, `widening_*` and `wrapping_*` methods on integers 
+`overflowing_*`, `widening_*` and `wrapping_*` methods on integers
 that allow us a simple implementation.
 
 ```rust
@@ -86,7 +86,6 @@ impl std::ops::Div for Uint128 {
 The assembly delegates to a compiler builtin called `__udivti3`, so our
 code is pretty much loads that up and all the hairy work is done for us.
 
-
 ```asm
 <bigints::u128::Uint128 as core::ops::arith::Div>::div:
 	push rax
@@ -110,8 +109,8 @@ platform.
 ```rust
 #[derive(Debug, Clone, Copy)]
 pub struct Uint128 {
-    pub l: u64, 
-    pub h: u64, 
+    pub l: u64,
+    pub h: u64,
 }
 ```
 
@@ -160,26 +159,25 @@ Now I needed a way to make sure all my operations were closer to native,
 so I wrote up a test harness that used `cargo-show-asm` to check the
 generated assembly on a variety of platforms (including a big-endian
 one, s390x) to make sure that there were no unnecessary moves being
-produced. 
+produced.
 
 I used this and compared my implementations to native to see if they
 were being properly optimized and found out that for aarch64, using
 `overflowing_sub` and `wrapping_sub` nets this:
 
 ```asm
-<bigints::u128::Uint128 as core::ops::arith::Sub>::sub:                                                                                                                                                                                                                                                                                                                                
-    subs x0, x0, x2                                                                                                                                                                                                                                                                                                                                                                    
-    sub x8, x1, x3                                                                                                                                                                                                                                                                                                                                                                     
-    cset w9, lo                                                                                                                                                                                                                                                                                                                                                                        
-    sub x1, x8, x9                                                                                                                                                                                                                                                                                                                                                                     
-    ret                                                                                                                                                                                                                                                                                                                                                                                
+<bigints::u128::Uint128 as core::ops::arith::Sub>::sub:
+    subs x0, x0, x2
+    sub x8, x1, x3
+    cset w9, lo
+    sub x1, x8, x9
+    ret
 ```
 
 Whereas the native version looks like so:
 
-
 ```asm
-<bigints::u128::Uint128 as core::ops::arith::Sub>::sub:                                                                                                                                                                                                                                                                                                                                
+<bigints::u128::Uint128 as core::ops::arith::Sub>::sub:
   subs x0, x0, x2
   sbc  x1, x1, x3
   ret
@@ -212,11 +210,11 @@ scheduling:
 
 ```asm
 <bigints::u128::Uint128 as core::ops::arith::Mul>::mul:
-    umulh x10, x0, x2    
-    mul x9, x1, x2       
-    madd x9, x3, x0, x9  
-    mul x0, x0, x2       
-    add x1, x9, x10      
+    umulh x10, x0, x2
+    mul x9, x1, x2
+    madd x9, x3, x0, x9
+    mul x0, x0, x2
+    add x1, x9, x10
     ret
 ```
 

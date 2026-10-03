@@ -71,7 +71,7 @@ town center, asking for favors, doing favors, and building up the shared
 community. People were happy, for the most part.
 
 Most of us used to lead that kind of life, until the businesspeople
-lured us over to factories with the promise of *wages* and *benefits*,
+lured us over to factories with the promise of _wages_ and _benefits_,
 promising us milk and honey but leaving us with regrets and sadness.
 
 Thanks for nothing, capitalists.

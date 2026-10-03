@@ -1,7 +1,7 @@
 ---
 title: "Building Rust binaries for different platforms"
 date: 2021-11-03T09:24:46-05:00
-draft: false 
+draft: false
 ---
 
 Rust has great support for cross compilation, with `cross`, you can install the required c toolchain + linker and cross compile your rust code to a binary that runs on your targeted platform. Sweet!
@@ -132,7 +132,7 @@ When you go to the releases tab to download a particular binary, you'll need to 
 
 Now, let's start building for all these systems.
 
-## Building Binaries for ~30 Targets 
+## Building Binaries for ~30 Targets
 
 We're going to use Github Actions, a task runner on github.com to build our binaries. Our binary is a simple `hello world` binary.
 
@@ -144,8 +144,8 @@ Conceptually, we'd like to do the following:
 - Download the C compiler (environment) we need.
 - Download a docker image of the OS we require.
 - Download the rust toolchain onto docker container.
-- Build the binary. 
-- *Optionally* strip debug symbols.
+- Build the binary.
+- _Optionally_ strip debug symbols.
 - Publish it to the github releases tab.
 
 We'll first start out by defining our github action and setting up the target environments:
@@ -213,11 +213,11 @@ jobs:
 
 ### Downloading the C compiler
 
-Most of the time, the C compiler we need is already installed, but in some cases it'll be overriden by another compiler. 
+Most of the time, the C compiler we need is already installed, but in some cases it'll be overriden by another compiler.
 
 We'll need to download the correct suitable C compiler in that case: (i686-pc-windows-gnu has gcc, but it's not on the $PATH).
 
-```{.yml .numberLines} 
+```{.yml .numberLines}
     - name: Install prerequisites
       shell: bash
       run: |
@@ -299,7 +299,7 @@ We'll need to download the correct suitable C compiler in that case: (i686-pc-wi
         echo ::set-output name=BIN_NAME::${BIN_NAME}
 ```
 
-### And uploading to Github 
+### And uploading to Github
 
 ```{.yml .numberLines}
     - name: Create tarball
@@ -344,7 +344,7 @@ We'll need to download the correct suitable C compiler in that case: (i686-pc-wi
         files: |
           ${{ steps.package.outputs.PKG_PATH }}
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 And after building this github actions file, we find that... 3 targets fail to build.
@@ -353,7 +353,7 @@ And after building this github actions file, we find that... 3 targets fail to b
 
 Luckily, the error message that cross provides gives us a clear indication of what to fix. Cross does not provide a proper image, so it gets confused, defaults to the toolchain it's running on (ubuntu 20.04), and the linker cannot find the proper libraries required. Easy to fix: Add a `Cross.toml` file to the root of the project with docker images for the particular targets, and build again.
 
-```{.toml .numberLines} 
+```{.toml .numberLines}
 [target.x86_64-unknown-freebsd]
 image = "svenstaro/cross-x86_64-unknown-freebsd"
 

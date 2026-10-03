@@ -35,7 +35,7 @@ In Rust, for example:
 
 ## Calculator Example
 
-```{.cc .numberLines} 
+```{.cc .numberLines}
 #include <iostream>
 
 // make illegal states illegal to represent.

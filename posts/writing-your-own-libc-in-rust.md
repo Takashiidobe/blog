@@ -49,6 +49,7 @@ use std::arch::asm;
 Next, since we'll be supporting `linux`, with `x86_64` [^1] and `aarch64` [^2], we can force every other architecture/OS mix to have a compiler error, so no one will miscompile and have a runtime error.
 
 [^1]: Also known as `amd64`. [Go](https://github.com/golang/go/blob/1176052bb40378272cfbe83d873b65fcc2ed8502/src/go/build/syslist.go#L58) calls it this due to amd coming up with it, whereas intel popularized it, calling it `x86_64`.
+
 [^2]: Also known as `ARM64`. Apple uses `ARM64` whereas others use `aarch64`.
 
 ```rust
@@ -78,8 +79,7 @@ macro_rules! syscall0 {
 
 ### ARM64
 
-So we'll start implementing syscalls in `ARM64`  first.
-
+So we'll start implementing syscalls in `ARM64` first.
 
 Let's look at an example of Hello World in ARM64 to familiarize ourselves with syscalls in ARM64:
 

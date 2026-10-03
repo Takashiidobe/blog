@@ -13,7 +13,7 @@ The repo is here: [Behistun](https://github.com/Takashiidobe/behistun/).
 
 First things first, we had to compile some m68k ELF binaries. I fired up
 my copy of crosstool and made myself an `m68k-unknown-linux-gnu-gcc`
-toolchain. 
+toolchain.
 
 To decode a binary, you have to first read the relevant ELF sections of
 a binary. To do so, I used the `goblin` library, which took care of
@@ -61,13 +61,13 @@ To get `cat` to work though, I needed to do some syscall passthrough. I
 needed to map the `m68000`'s pointers from guest to host, and also map
 the syscall numbers from m68k linux to x86_64 linux. But once that was
 done, I could finally write C, compile to m68000 linux elf, and run it
-on my x86_64 linux elf machine. 
+on my x86_64 linux elf machine.
 
 Of course, there was a bit more to do -- I had to implement the rest of
 the `m68010` and `m68020` instruction set, which I discovered I didn't
 complete by using fuzzing to generate random C programs with `csmith`,
 so I implemented those instructions, and was off to the races -- all I
-had to do was implement syscalls. 
+had to do was implement syscalls.
 
 In the end, I decided to translate about 200 or so syscalls, wrote tests
 for them, and tested them out against `qemu-m68k-static` for

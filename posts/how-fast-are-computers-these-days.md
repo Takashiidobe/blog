@@ -135,21 +135,20 @@ The numbers looked like this, with a blocksize of 1MB and running 8 jobs in para
 
 Computer:
 
-| job name                      | p50     | p90    | p99     | p99.99   | throughput                     |
-|-------------------------------|---------|--------|---------|----------|--------------------------------|
-| sync sequential read          | 113μs   | 5014μs | 33424μs | 37487μs  | 3387MB/s                       |
-| sync sequential write - fsync | 169μs   | 529μs  | 1319μs  | 333448μs | 2830MB/s                       |
-| sync sequential write + fsync | 775μs   | 1090μs | 1369μs  | 2147μs   | 1714MB/s                       |
-| sync readwrite - fsync        | 204μs   | 416μs  | 865μs   | 14222μs  | Read: 2556MB/s Write: 2665MB/s |
-| sync readwrite + fsync        | 416μs   | 832μs  | 2769μs  | 9372μs   | Read: 1052MB/s Write: 1093MB/s |
+| job name                      | p50   | p90    | p99     | p99.99   | throughput                     |
+| ----------------------------- | ----- | ------ | ------- | -------- | ------------------------------ |
+| sync sequential read          | 113μs | 5014μs | 33424μs | 37487μs  | 3387MB/s                       |
+| sync sequential write - fsync | 169μs | 529μs  | 1319μs  | 333448μs | 2830MB/s                       |
+| sync sequential write + fsync | 775μs | 1090μs | 1369μs  | 2147μs   | 1714MB/s                       |
+| sync readwrite - fsync        | 204μs | 416μs  | 865μs   | 14222μs  | Read: 2556MB/s Write: 2665MB/s |
+| sync readwrite + fsync        | 416μs | 832μs  | 2769μs  | 9372μs   | Read: 1052MB/s Write: 1093MB/s |
 
 Phone:
 
 With a blocksize of 256k and running 8 jobs in parallel:
 
-
 | job name                      | p50     | p90     | p99     | p99.99   | throughput                     |
-|-------------------------------|---------|---------|---------|----------|--------------------------------|
+| ----------------------------- | ------- | ------- | ------- | -------- | ------------------------------ |
 | sync sequential read          | 1549μs  | 4490μs  | 4752μs  | 22152μs  | 866MB/s                        |
 | sync sequential write - fsync | 18482μs | 39584μs | 89654μs | 109577μs | 100MB/s                        |
 | sync sequential write + fsync | 510μs   | 865μs   | 1729μs  | 1860μs   | 86.3MB/s                       |
@@ -164,25 +163,25 @@ I was expecting about 400MB/s hashing on the laptop and about 100MB/s hashing on
 
 Laptop:
 
-- sha3-256:          56.14 MiB/sec
-- md5:              404.15 MiB/sec
-- sha1:             432.36 MiB/sec
-- xxhash:          1827.80 MiB/sec
-- murmur3:         1826.07 MiB/sec
-- jhash:           1542.84 MiB/sec
-- fnv:             3720.28 MiB/sec
-- crc32c:          4682.73 MiB/sec
+- sha3-256: 56.14 MiB/sec
+- md5: 404.15 MiB/sec
+- sha1: 432.36 MiB/sec
+- xxhash: 1827.80 MiB/sec
+- murmur3: 1826.07 MiB/sec
+- jhash: 1542.84 MiB/sec
+- fnv: 3720.28 MiB/sec
+- crc32c: 4682.73 MiB/sec
 
 Phone:
 
-- sha3-256:         217.77 MiB/sec
-- md5:              391.14 MiB/sec
-- sha1:             334.32 MiB/sec
-- xxhash:          2037.18 MiB/sec
-- murmur3:         1328.81 MiB/sec
-- jhash:           1754.98 MiB/sec
-- fnv:             2928.83 MiB/sec
-- crc32c:         14255.49 MiB/sec
+- sha3-256: 217.77 MiB/sec
+- md5: 391.14 MiB/sec
+- sha1: 334.32 MiB/sec
+- xxhash: 2037.18 MiB/sec
+- murmur3: 1328.81 MiB/sec
+- jhash: 1754.98 MiB/sec
+- fnv: 2928.83 MiB/sec
+- crc32c: 14255.49 MiB/sec
 
 I could not have been more wrong.
 
@@ -202,7 +201,7 @@ In 2006, according to [Source](http://googlesystem.blogspot.com/2006/09/how-much
 
 Assuming google search needs to handle 100k requests/second, and each request would return 4KB of data, our bandwidth requirement would be 400MB/s. That's feasible to handle on a few laptops.
 
-Assuming that we didn't have an index at all. We would need to somehow read 850TB of data per request -- even with a sequential read speed of ~3GB/s, each request would take 3 days of compute time to complete. Since we have to handle 100k reads a second, and each request takes 3 days of compute time, in one second we would need to spend 866 years of compute time to serve reads. One second of requests would also require 100,000 computers * the amount of seconds in three days, or about 250,000, for 2.5B computers required to serve google search. At $800/computer, this would be $2.5T, 1/10th the GDP of the US. Crazy.
+Assuming that we didn't have an index at all. We would need to somehow read 850TB of data per request -- even with a sequential read speed of ~3GB/s, each request would take 3 days of compute time to complete. Since we have to handle 100k reads a second, and each request takes 3 days of compute time, in one second we would need to spend 866 years of compute time to serve reads. One second of requests would also require 100,000 computers \* the amount of seconds in three days, or about 250,000, for 2.5B computers required to serve google search. At $800/computer, this would be $2.5T, 1/10th the GDP of the US. Crazy.
 
 However, if the computer only needed to search a gigabyte of data on disk to fetch a result, since a laptop's SSD can read about 3GB/s sequentially, even having to search on disk for 100MB would take 30ms. Even worse would be the computer requirement -- each machine would only be able to handle 30 req/s, so 3,000 laptops would be required at any given time to serve all search requests.
 

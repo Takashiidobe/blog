@@ -1,7 +1,7 @@
 ---
 title: "Implementing Iterators"
 date: 2021-09-18T21:41:43-05:00
-draft: false 
+draft: false
 ---
 
 Let's talk about implementing iterators: a way to visit every item in a collection. We'll use C as an implementation language because it's simpler than other languages, and we'll implement C++'s iterator API. This is the same in most mainstream programming languages, like Rust, C++, Python, Ruby, JavaScript, Java, C#, and PHP, with a few small implementation differences.
@@ -10,26 +10,26 @@ Let's talk about implementing iterators: a way to visit every item in a collecti
 
 The API we'll create is simple. A `int* next(int* it)` function that takes an iterator and returns its next element, or a `NULL` pointer if nothing comes next, and a `bool has_next(int* it)` that returns `true` if it has a next item, or `false` if it does not.
 
-The C++ iterator API needs a few functions that give you an iterator to a collection. These are called `begin()` and `end()`, which return a pointer to the first item in the collection, and one past the end of the collection. This is a dangerous API, since if we dereference `end()` we automatically cause Undefined Behavior, but our APIs become a bit cleaner. Tradeoffs, I guess. 
+The C++ iterator API needs a few functions that give you an iterator to a collection. These are called `begin()` and `end()`, which return a pointer to the first item in the collection, and one past the end of the collection. This is a dangerous API, since if we dereference `end()` we automatically cause Undefined Behavior, but our APIs become a bit cleaner. Tradeoffs, I guess.
 
 We'll elide the details of begin in our example and implement it ourselves.
 
 Let's start by defining our collection: an array of ints from 1 - 5.
 
-```{.c .numberLines} 
+```{.c .numberLines}
 int items[] = {1, 2, 3, 4, 5};
 ```
 
-Let's say we want to print them: no need for iterators, of course. 
+Let's say we want to print them: no need for iterators, of course.
 
-```{.c .numberLines} 
+```{.c .numberLines}
 #include <stdio.h>
 
 int items[] = {1, 2, 3, 4, 5};
 
 int main(void) {
-    for (int i = 0; i < 5; i++) 
-        printf("%d ", items[i]);  
+    for (int i = 0; i < 5; i++)
+        printf("%d ", items[i]);
 }
 ```
 
@@ -37,7 +37,7 @@ But we have to initialize and increment a variable and use it as an index to our
 
 Let's start by defining the begin and end iterators.
 
-```{.c .numberLines} 
+```{.c .numberLines}
 int* begin = &items[0];
 int* end = &items[5];
 ```
@@ -48,21 +48,21 @@ Now, to create the `next()` function, we want to take an iterator and move to th
 
 Let's do that:
 
-```{.c .numberLines} 
+```{.c .numberLines}
 int* next(int* it) {
-    if (it != end) 
+    if (it != end)
         return it + sizeof(int);
     return NULL;
 }
 ```
 
-Since we know that our iterator is an (int) pointer, we want to increment the iterator four bytes (the result of sizeof(int) on my computer). This works, but there's a shorthand that most C compilers will let you do, called pointer arithmetic. In this case, the compiler knows that this is an int pointer, and so it's overloaded additions and subtractions to move forward and backwards by the sizeof an int. 
+Since we know that our iterator is an (int) pointer, we want to increment the iterator four bytes (the result of sizeof(int) on my computer). This works, but there's a shorthand that most C compilers will let you do, called pointer arithmetic. In this case, the compiler knows that this is an int pointer, and so it's overloaded additions and subtractions to move forward and backwards by the sizeof an int.
 
 We can rewrite the above as:
 
-```{.c .numberLines} 
+```{.c .numberLines}
 int* next(int* it) {
-    if (it != end) 
+    if (it != end)
         return ++it;
     return NULL;
 }
@@ -70,7 +70,7 @@ int* next(int* it) {
 
 Next, we want to write `has_next`. `has_next` should return a `bool` `true` if the iterator can be incremented, or `false` if not. We know that an iterator has a next item if it's not in the last item in the collection, which is just before the end pointer. Thus, we can define `has_next` thusly:
 
-```{.c .numberLines} 
+```{.c .numberLines}
 int has_next(int* it) {
     return it != end - 1;
 }
@@ -78,7 +78,7 @@ int has_next(int* it) {
 
 Let's use our iterators thus far to traverse our collection:
 
-```{.c .numberLines} 
+```{.c .numberLines}
 #include <stdio.h>
 
 int items[] = {1, 2, 3, 4, 5};
@@ -87,7 +87,7 @@ int* begin = &items[0];
 int* end = &items[5];
 
 int* next(int* it) {
-    if (it != end) 
+    if (it != end)
         return ++it;
     return NULL;
 }
@@ -109,7 +109,7 @@ int main(void) {
 
 This should print out:
 
-```{.bash .numberLines} 
+```{.bash .numberLines}
 Printing forwards
 1 has next? true
 2 has next? true
@@ -120,11 +120,11 @@ Printing forwards
 
 ## Why use Iterators?
 
-If this seems like a lot of ceremony for iterating through an array, it is. It's totally unnecessary. It gives us nothing more powerful than what a raw for loop would give us. But what happens if our collection isn't linear? What happens if we traverse a sorted map, or a graph? 
+If this seems like a lot of ceremony for iterating through an array, it is. It's totally unnecessary. It gives us nothing more powerful than what a raw for loop would give us. But what happens if our collection isn't linear? What happens if we traverse a sorted map, or a graph?
 
-With a for loop, we must ask the caller to understand how the data structure is implemented. With an iterator, we can provide a definition of next, and has next, and the user can call it without knowing **anything about the underlying collection** outside of the fact that it is iterable. 
+With a for loop, we must ask the caller to understand how the data structure is implemented. With an iterator, we can provide a definition of next, and has next, and the user can call it without knowing **anything about the underlying collection** outside of the fact that it is iterable.
 
-This allows us to wrap graphs, trees, hash tables, ranges (finite and infinite), and circular data structures in a friendly API for our users. 
+This allows us to wrap graphs, trees, hash tables, ranges (finite and infinite), and circular data structures in a friendly API for our users.
 
 As well, language features allow us to reward usage of iterators by making syntax more terse: In C++, Rust, Java, C#, Ruby, Python, and JavaScript, if you implement the iterable API in each language, you can do something along these lines:
 
@@ -141,7 +141,7 @@ Now that we can implement iterators in C, try giving it a shot in your favorite 
 
 I tried it myself in C when writing a resizable array type too:
 
-```{.c .numberLines} 
+```{.c .numberLines}
 typedef struct Vector {
   size_t len;
   size_t capacity;
@@ -232,4 +232,3 @@ int vector_pop(Vector *v) {
   return top;
 }
 ```
-

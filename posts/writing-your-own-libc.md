@@ -90,7 +90,6 @@ We now need a correct list of system calls. Imagine if we thought `SYSCALL_OPEN`
 
 The computer could crash, our process could crash, anything could happen.
 
-
 ```c
 #define SYSCALL_OPEN 3
 system_call(SYSCALL_OPEN, path, flags, ...);
@@ -261,7 +260,6 @@ And for `cc` and `memory`, from: <https://gcc.gnu.org/onlinedocs/gcc/Extended-As
 > The `memory` clobber tells the compiler that the assembly code performs memory reads or writes to items other than those listed in the input and output operands (for example, accessing the memory pointed to by one of the input parameters). To ensure memory contains correct values, GCC may need to flush specific register values to memory before executing the asm. Further, the compiler does not assume that any values read from memory before an asm remain unchanged after that asm; it reloads them as needed. Using the "memory" clobber effectively forms a read/write memory barrier for the compiler.
 
 > Note that this clobber does not prevent the processor from doing speculative reads past the asm statement. To prevent that, you need processor-specific fence instructions.
-
 
 So on x86, a system call will look like:
 

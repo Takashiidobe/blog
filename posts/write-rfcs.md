@@ -1,7 +1,7 @@
 ---
 title: "Write RFCs"
 date: 2021-06-03T21:00:10-04:00
-draft: false 
+draft: false
 ---
 
 RFCs are `Requests for Comments`, popularized by the Internet Engineering Task Force (IETF) which develops and promotes standards for the internet.
@@ -11,8 +11,8 @@ RFCs are `Requests for Comments`, popularized by the Internet Engineering Task F
 Much has been said about RFCs (Including [RFC 3](https://datatracker.ietf.org/doc/html/rfc3) which outlines how to write an RFC for the IETF), but let's read through the main points of RFC 3.
 
 - RFCs can be on thoughts, suggestions, etc. relating to the subject (The internet in this case)
-- RFCs should be timely, rather than polished 
-- RFCs do not require examples 
+- RFCs should be timely, rather than polished
+- RFCs do not require examples
 - RFCs can be as short or as long as needed
 
 According to RFC 3, RFCs should have the following information:

@@ -29,8 +29,9 @@ address registers are for indirect accessing of memory. I assume this
 was chosen because this made registers take 3-bits (2^3 = 8) instead of
 4-bits (2^4 = 16), and because the m68k had support for 8 effective
 addressing modes on its two operands, which took up 6 bits in total (EA
-+ Reg). Given a 4-bit group, you'd be left with another 3 bits for the
-register for a binary operator, or to do what you wanted. 
+
+- Reg). Given a 4-bit group, you'd be left with another 3 bits for the
+  register for a binary operator, or to do what you wanted.
 
 I wanted to see if it was possible to support 16 registers, so I bit the
 4-bit bullet per register. Given that an instruction set needs to have
@@ -51,7 +52,7 @@ So there you have it. Each binary instruction has 4-bits for group,
 4-bits for subgroup, 2-bits for size, 4-bits for register 1 (which is
 the target) and 4-bits for register 2. This works out for most
 instructions, like arithmetic ones, but you cannot do an arithmetic
-operation + change the addressing mode. 
+operation + change the addressing mode.
 
 To do so, I added three instructions as full 12-bit instructions. `lea`,
 (load effective address), a load and store instruction. These took up
@@ -66,7 +67,7 @@ The effective addresses are:
 4. offset indirect `-4(%sp)`
 
 Since you can only place this on either the src or the target, this is a
-bit barebones, but it works out fine. 
+bit barebones, but it works out fine.
 
 I decided not to go with a condition flag design (like m68k, arm, x86)
 and take a flagless design -- in exchange though, you have to implement
@@ -101,7 +102,7 @@ register. You can do the same with `xor %rX, %rX`, which zeroes out the
 target register. Thus, in the textual assembly format, You can support
 65 values (which requires 7-bits) by rewriting the last case to
 something supported. You can also do this with div (rewrite `div %rX,
-$0` with `trap`), or `mod` as well. 
+$0` with `trap`), or `mod` as well.
 
 I decided to add a few extra assembly directives:
 
@@ -115,7 +116,7 @@ After hooking up syscall write on linux, you can write assembly pretty
 well:
 
 ```asm
-        movi %r0, $1         # syscall write 
+        movi %r0, $1         # syscall write
         movi %r1, $1         # stdout
         load.l %r2, msg      # r2 = &msg
         movi %r3, $12        # length

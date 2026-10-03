@@ -18,7 +18,6 @@ I personally use a gmail, so I had to create a gmail app password to provide to 
 
 On first startup, aerc has a startup wizard that helps you set up your account. Nice! Put in your information and enjoy e-mail in the terminal.
 
-
 My `aerc/accounts.conf` looks something like this:
 
 ```{.sh .numberLines}

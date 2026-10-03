@@ -115,7 +115,7 @@ fn main() -> Result<()> {
 
 Next, the function definition and matching patterns based on it.
 
-This code matches a regex provided (like "**/*.rs"), and then returns all matching files. We then iterate through the files and process each line.
+This code matches a regex provided (like "\*_/_.rs"), and then returns all matching files. We then iterate through the files and process each line.
 
 ```rust
 fn index(pattern: &str) -> Result<()> {
@@ -136,7 +136,6 @@ fn index(pattern: &str) -> Result<()> {
 ```
 
 Next, we want to do something for each line. First, split each line on whitespace to get a list of words. A production worthy search engine would do stemming and remove unnecessary punctuation here, but we won't worry about that. Finally, we'll use the [`windows`](https://doc.rust-lang.org/std/primitive.slice.html#method.windows) function on slices, to return arrays with the length provided (5) across the entire list. This is n-grams in a nutshell.
-
 
 ```rust
 let line = line?;

@@ -50,7 +50,7 @@ make
 
 ## A Userspace
 
-For a userspace, I decided to use toybox. 
+For a userspace, I decided to use toybox.
 
 Same drill, compile it statically.
 
@@ -61,7 +61,7 @@ git clone https://github.com/landley/toybox.git --depth=1
 ```sh
 cd toybox
 export PATH="$HOME/x-tools/x86_64-unknown-linux-musl/bin:$PATH"
-export CROSS_COMPILE=x86_64-unknown-linux-musl- 
+export CROSS_COMPILE=x86_64-unknown-linux-musl-
 export LDFLAGS="--static"
 make distclean
 make defconfig
@@ -357,7 +357,7 @@ and point it to a victim pid on the host that can mount for us:
 int main(int argc, char **argv) {
   pid_t pid = atoi(argv[1]);
   struct user_regs_struct regs;
-  
+
   ptrace(PTRACE_ATTACH, pid, 0, 0);
   waitpid(pid, NULL, 0);
   ptrace(PTRACE_GETREGS, pid, 0, &regs);
@@ -656,7 +656,7 @@ to see which syscall killed our task (good for debugging).
 I've allowed enough syscalls to allow for one last party trick -- a way
 to call the network (on your own computer).
 
-I spun up an http server serving the `container.c` file at 
+I spun up an http server serving the `container.c` file at
 `127.0.0.1:8080/container.c`:
 
 And look, there's the code.
