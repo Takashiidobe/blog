@@ -8,6 +8,7 @@ import sys
 import frontmatter
 
 POSTS_DIR = "posts"
+INCLUDE_DRAFTS = os.environ.get("INCLUDE_DRAFTS") == "1"
 
 
 def sorted_posts():
@@ -15,7 +16,7 @@ def sorted_posts():
     for filename in os.listdir(POSTS_DIR):
         with open(os.path.join(POSTS_DIR, filename)) as f:
             metadata, _ = frontmatter.parse(f.read())
-        if metadata.get("draft") == False:
+        if INCLUDE_DRAFTS or metadata.get("draft") == False:
             title = metadata.get("title", filename[:-3])
             arr.append((metadata["date"].timestamp(), filename, title))
     arr.sort(reverse=True)
