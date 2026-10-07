@@ -285,31 +285,6 @@ It never names `ebx` as an operand. It saves it, runs `cpuid`, copies the
 result into `eax`, and restores it. The same source needs a different asm
 body depending on the compiler and target.
 
-zstd used to have an x86_64 version of this for Clang, whose `__cpuid`
-intrinsic didn't save and restore `rbx` (supposedly fixed in
-[D101338](https://reviews.llvm.org/D101338), according to a comment there).
-It used `pushq %%rbx` /
-`popq %%rbx` instead of `pushl`, and that one hides another undeclared
-effect. On x86_64 the 128 bytes below `rsp` are the red zone, where the
-compiler can keep locals in a function that makes no calls. The compiler
-doesn't treat asm as a call, so it can put a local at `-8(%rsp)`, and the
-`push` writes right there:
-
-```c
-long f(long x) {
-    volatile long a = x;
-    __asm__ volatile("pushq %%rbx\n\tpopq %%rbx" ::: "rcx");
-    return a;
-}
-```
-
-Both GCC and Clang store `a` at `-8(%rsp)`, run the push/pop over it, and
-return garbage ([Compiler Explorer](https://godbolt.org/z/hn537WEs6)); when
-I ran it, `f(42)` returned 0. On i386 this doesn't happen because there's no
-red zone, which is why the `pushl` version was fine. It's the same kind of
-bug as the missing memory clobber: the asm does something it never told the
-compiler about, and there's no static analysis for it.
-
 Rust has the same restriction. LLVM reserves `rbx` (as a base pointer when
 the stack needs realigning, and as the GOT register in 32-bit PIC code), so
 `out("ebx") x` is a compile error, and so is listing it as a clobber. Slate

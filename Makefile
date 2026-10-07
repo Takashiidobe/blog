@@ -40,7 +40,7 @@ $(OUT_DIR)/robots.txt:
 $(OUT_DIR)/sitemap.xml: $(OUT)
 	./bin/sitemap.py > site/sitemap.xml
 
-$(OUT_DIR)/rss.xml: $(OUT)
+$(OUT_DIR)/rss.xml: $(OUT) bin/rss.sh bin/generate-rss.py
 	./bin/rss.sh
 
 .PHONY: mkdirs
