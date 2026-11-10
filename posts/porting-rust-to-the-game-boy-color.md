@@ -23,8 +23,8 @@ Some people say the Game Boy Color's assembly is an Z80, Intel 8080, LR35902, or
 an SM83. Whatever the architecture, it's an 8-bit computer with 7 general
 purpose registers `a`, `b`, `c`, `d`, `e`, `h`, `l`, and a separate flags
 register, `f`. `a` is the accumulator, which is special because it is the target
-for a few other 16-bit ops. Every register other than `a` can be paired to
-become a 16-bit register, so:
+for a few 16-bit ops. Every register other than `a` can be paired to become a
+16-bit register, so:
 
 - `b` + `c` -> `bc`
 - `d` + `e` -> `de`
@@ -63,7 +63,8 @@ a fork of `rustc_codegen_cranelift`, and `cranelift`, to hook everything
 together. Basically the pieces go:
 
 `rustc` (frontend) -> `rustc_codegen_cranelift` (middle end) -> `cranelift`
-(backend/optimizations) -> LR35902 asm -> `rgbasm`/`rgblink`/`rgbfix`.
+(backend/optimizations) -> LR35902 asm -> `rgbasm`/`rgblink`/`rgbfix` (to
+generate the ROM).
 
 Rustc didn't need much in terms of changes, just adding in the new target. More
 changes have to go in `rustc_codegen_cranelift` (I'll refer to this as
@@ -255,7 +256,7 @@ implementation per file also dropped size a lot (rgblink doesn't do garbage
 collection to delete unused sections).
 
 Another interesting to note, compilers have say `-s/-z` for size, and then
-`-O 1 | -O2 | -O3` for optimization options. I generally always used `-O3` for
+`-O1 | -O2 | -O3` for optimization options. I generally always used `-O3` for
 release (or `-O2` in C), and very rarely used `-s`. However, since the LR35902
 has such little space, one idea I had was to provide a space optimized and a
 time optimized version of a function. That way, if the user provides `-s/-z`,
